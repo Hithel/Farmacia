@@ -12,7 +12,7 @@ namespace Persistence.Data.Configuration;
                 builder.ToTable("TipoDocumento");
 
             builder.Property(p=> p.Descripcion)
-            .HasColumnType("nombre")
+            .HasColumnName("Descripcion")
             .HasMaxLength(50)
             .IsRequired();
             }
