@@ -49,16 +49,15 @@ namespace Persistence.Data.Configuration;
             .UsingEntity<Presentacion>(
 
                 j => j
-                .HasOne(pt => pt.Medicamento)
-                .WithMany(t => t.Presentacion)
-                .HasForeignKey(ut => ut.IdMedicamentoFk),
-
-
-                j => j
                 .HasOne(et => et.TipoPresentacion)
                 .WithMany(et => et.Presentaciones)
                 .HasForeignKey(el => el.IdTipoPresentacionFk),
 
+                j => j
+                .HasOne(pt => pt.Medicamento)
+                .WithMany(t => t.Presentacion)
+                .HasForeignKey(ut => ut.IdMedicamentoFk),
+                
                 j =>
                 {
                     j.ToTable("Presentacion");
