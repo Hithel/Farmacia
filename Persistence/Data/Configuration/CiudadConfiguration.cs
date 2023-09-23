@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Persistence.Data.Configuration
-{
+namespace Persistence.Data.Configuration;
     public class CiudadConfiguration : IEntityTypeConfiguration<Ciudad>
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Ciudad> builder)
@@ -22,4 +18,3 @@ namespace Persistence.Data.Configuration
             .HasForeignKey(p=> p.IdDepartamentoFk);
         }
     }
-}

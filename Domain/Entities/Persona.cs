@@ -14,6 +14,7 @@ namespace Domain.Entities;
         public TipoPersona TipoPersona {get; set;}
         public int IdCargoFk {get; set;}
         public Cargo Cargo {get; set;}
+        public User User {get; set;}
         public ICollection<Receta> Recetas {get; set;}
         public ICollection<PersonaDireccion> PersonaDirecciones {get; set;}
         public ICollection<PersonaContacto> PersonaContactos {get; set;}

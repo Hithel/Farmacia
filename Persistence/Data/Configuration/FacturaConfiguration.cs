@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Persistence.Data.Configuration
-{
+namespace Persistence.Data.Configuration;
     public class FacturaConfiguration : IEntityTypeConfiguration<Factura>
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Factura> builder)
@@ -19,4 +15,3 @@ namespace Persistence.Data.Configuration
             builder.HasOne(p=> p.Persona).WithMany(p=> p.Facturas).HasForeignKey(p=>p.IdDoctorFk);
         }
     }
-}
