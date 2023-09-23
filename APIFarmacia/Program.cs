@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Persistence;
+using Persistence.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<APIFarmaciaContext>(options =>
+
+builder.Services.AddDbContext<FarmaciaContext>(options =>
 {
     string connectionString = builder.Configuration.GetConnectionString("ConexMysql");
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
@@ -32,3 +33,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
