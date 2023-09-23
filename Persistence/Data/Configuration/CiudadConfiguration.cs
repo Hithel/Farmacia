@@ -9,7 +9,7 @@ namespace Persistence.Data.Configuration;
         {
             builder.ToTable("ciudad");
             builder.Property(p=> p.Nombre)
-            .HasColumnType("nombre")
+            .HasColumnName("nombre")
             .HasMaxLength(50)
             .IsRequired();
 

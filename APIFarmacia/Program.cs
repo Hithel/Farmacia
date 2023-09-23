@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using Persistence.Context;
+using Persistence;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
