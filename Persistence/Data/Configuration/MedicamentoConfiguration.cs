@@ -55,9 +55,9 @@ namespace Persistence.Data.Configuration;
 
                 j => j
                 .HasOne(pt => pt.Medicamento)
-                .WithMany(t => t.Presentacion)
+                .WithMany(t => t.Presentaciones)
                 .HasForeignKey(ut => ut.IdMedicamentoFk),
-                
+
                 j =>
                 {
                     j.ToTable("Presentacion");
@@ -65,5 +65,51 @@ namespace Persistence.Data.Configuration;
 
                 });
 
+                builder
+                .HasMany(p => p.Facturas) /* TipoPresentacion */
+                .WithMany(r => r.Medicamentos)
+                .UsingEntity<MedicamentoVendido>(
+
+                    j => j
+                    .HasOne(et => et.Factura)
+                    .WithMany(et => et.MedicamentoVendidos)
+                    .HasForeignKey(el => el.IdFacturaFK),
+
+                    j => j
+                    .HasOne(pt => pt.Medicamento)
+                    .WithMany(t => t.MedicamentoVendidos)
+                    .HasForeignKey(ut => ut.IdMedicamentoFk),
+                    
+                    j =>
+                    {
+                        j.ToTable("MedicamentoVendido");
+                        j.HasKey(t => new { t.IdMedicamentoFk, t.IdFacturaFK });
+
+                    });
+
+                    builder
+                .HasMany(p => p.Recetas) /* TipoPresentacion */
+                .WithMany(r => r.Medicamentos)
+                .UsingEntity<MedicamentoReceta>(
+
+                    j => j
+                    .HasOne(et => et.Receta)
+                    .WithMany(et => et.MedicamentoRecetas)
+                    .HasForeignKey(el => el.IdRecetaFk),
+
+                    j => j
+                    .HasOne(pt => pt.Medicamento)
+                    .WithMany(t => t.MedicamentoRecetas)
+                    .HasForeignKey(ut => ut.IdMedicamentoFk),
+                    
+                    j =>
+                    {
+                        j.ToTable("MedicamentoReceta");
+                        j.HasKey(t => new { t.IdMedicamentoFk, t.IdRecetaFk });
+
+                    });
+
+/*dotnet ef database update --project ./Persistencia/ --startup-project ./API/
+ */
         }
     }

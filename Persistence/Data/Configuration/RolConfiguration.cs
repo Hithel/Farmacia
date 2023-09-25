@@ -11,7 +11,7 @@ namespace Persistence.Data.Configuration;
                 builder.ToTable("Rol");
 
                 builder.Property(p=> p.Descripcion)
-                .HasColumnType("nombre")
+                .HasColumnName("Descripcion")
                 .HasMaxLength(50)
                 .IsRequired();
     

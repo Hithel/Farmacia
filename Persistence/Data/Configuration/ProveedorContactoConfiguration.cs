@@ -11,7 +11,7 @@ namespace Persistence.Data.Configuration;
                 builder.ToTable("ProveedorContacto");
     
                 builder.Property(p=> p.Contacto)
-                .HasColumnType("nombre")
+                .HasColumnName("Contacto")
                 .HasMaxLength(50)
                 .IsRequired();
 

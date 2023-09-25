@@ -9,9 +9,14 @@ namespace Persistence.Data.Configuration;
         public void Configure(EntityTypeBuilder<Departamento> builder)
         {
             builder.ToTable("Departamento");
-            builder.Property(P=> P.Nombre).HasColumnName("Nombre").HasMaxLength(50).IsRequired();
+            builder.Property(P=> P.Nombre)
+            .HasColumnName("Nombre")
+            .HasMaxLength(50)
+            .IsRequired();
 
-            builder.HasOne(p=> p.Pais).WithMany(p=> p.Departamentos).HasForeignKey(p=>p.IdPaisFk);
+            builder.HasOne(p=> p.Pais)
+            .WithMany(p=> p.Departamentos)
+            .HasForeignKey(p=>p.IdPaisFk);
             
 
         }

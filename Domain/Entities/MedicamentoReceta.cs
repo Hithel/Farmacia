@@ -1,6 +1,6 @@
 
 namespace Domain.Entities;
-    public class MedicamentoReceta
+    public class MedicamentoReceta 
     {
         public int IdMedicamentoFk {get; set;}
         public Medicamento Medicamento {get; set;}

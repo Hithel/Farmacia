@@ -3,6 +3,7 @@
 **/obj/
 **/bin/
 
+<<<<<<< HEAD
 # estos solo si están en el mismo nivel del gitignore
 # *vscode/*
 # */obj/*
@@ -10,5 +11,7 @@
 # fin ignored bad pattern
 
 
+=======
+>>>>>>> ba0b98ddc3b03d22b327074e28db1ed1b75d656c
 #se hace un cambio para que funcione.
 
