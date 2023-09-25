@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using Dominio.Entities;
+using Domain.Entities;
 
 namespace Domain.Interfaces;
 public interface IGenericRepo<T> where T : BaseEntity
