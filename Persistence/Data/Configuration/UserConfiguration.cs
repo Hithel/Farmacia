@@ -31,6 +31,8 @@ namespace Persistence.Data.Configuration;
                 .WithMany(p => p.Users)
                 .HasForeignKey(p => p.IdRol);
 
+/* dotnet ef migrations add InitialCreate --project .\Persistencia\ --startup-project ./API/ --output-dir ./Data/Migrations
+ */
 
             }
         }

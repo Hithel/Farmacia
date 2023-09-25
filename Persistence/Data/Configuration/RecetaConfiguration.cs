@@ -27,11 +27,11 @@ namespace Persistence.Data.Configuration;
                 .IsRequired();
 
                 builder.HasOne(p => p.Doctor)
-                .WithMany(p => p.Recetas)
+                .WithMany(p => p.RecetasDoc)
                 .HasForeignKey(p => p.IdDoctorFK);
 
                 builder.HasOne(p => p.Paciente)
-                .WithMany(p => p.Recetas)
+                .WithMany(p => p.RecetasPac)
                 .HasForeignKey(p => p.IdPacienteFK);
 
                 builder.HasOne(p => p.Factura)

@@ -10,7 +10,7 @@ namespace Persistence.Data.Configuration;
             builder.ToTable("categoria");
 
             builder.Property(p=> p.Nombre)
-            .HasColumnType("nombre")
+            .HasColumnName("nombre")
             .HasMaxLength(50)
             .IsRequired();
 

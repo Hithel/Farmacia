@@ -6550,11 +6550,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "c:\\Users\\APT01-039\\Documents\\Farmacia\\APIFarmacia\\APIFarmacia.csproj",
+      "projectUniqueName": "C:\\Users\\APT01-039\\Documents\\Farmacia\\APIFarmacia\\APIFarmacia.csproj",
       "projectName": "APIFarmacia",
-      "projectPath": "c:\\Users\\APT01-039\\Documents\\Farmacia\\APIFarmacia\\APIFarmacia.csproj",
+      "projectPath": "C:\\Users\\APT01-039\\Documents\\Farmacia\\APIFarmacia\\APIFarmacia.csproj",
       "packagesPath": "C:\\Users\\APT01-039\\.nuget\\packages\\",
-      "outputPath": "c:\\Users\\APT01-039\\Documents\\Farmacia\\APIFarmacia\\obj\\",
+      "outputPath": "C:\\Users\\APT01-039\\Documents\\Farmacia\\APIFarmacia\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\APT01-039\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -6569,8 +6569,8 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "c:\\Users\\APT01-039\\Documents\\Farmacia\\Application\\Application.csproj": {
-              "projectPath": "c:\\Users\\APT01-039\\Documents\\Farmacia\\Application\\Application.csproj"
+            "C:\\Users\\APT01-039\\Documents\\Farmacia\\Application\\Application.csproj": {
+              "projectPath": "C:\\Users\\APT01-039\\Documents\\Farmacia\\Application\\Application.csproj"
             }
           }
         }

@@ -55,7 +55,7 @@ namespace Persistence.Data.Configuration;
 
                 j => j
                 .HasOne(pt => pt.Medicamento)
-                .WithMany(t => t.Presentacion)
+                .WithMany(t => t.Presentaciones)
                 .HasForeignKey(ut => ut.IdMedicamentoFk),
 
                 j =>
@@ -104,11 +104,12 @@ namespace Persistence.Data.Configuration;
                     
                     j =>
                     {
-                        j.ToTable("Presentacion");
+                        j.ToTable("MedicamentoReceta");
                         j.HasKey(t => new { t.IdMedicamentoFk, t.IdRecetaFk });
 
                     });
 
-
+/*dotnet ef database update --project ./Persistencia/ --startup-project ./API/
+ */
         }
     }
