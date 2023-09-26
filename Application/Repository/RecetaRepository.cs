@@ -26,6 +26,7 @@ namespace Application.Repository;
         public override async Task<Receta> GetByIdAsync(int id)
         {
             return await _context.Recetas
+
             .Include(p => p.MedicamentoVendidos)
             
             .FirstOrDefaultAsync(p =>  p.Id == id);
