@@ -18,7 +18,6 @@ namespace Application.Repository;
         public override async Task<IEnumerable<Factura>> GetAllAsync()
             {
                 return await _context.Facturas
-                .Include(p => p.Recetas)
                 .Include(p => p.MedicamentoVendidos)
                 .ToListAsync();
             }
@@ -26,7 +25,6 @@ namespace Application.Repository;
             public override async Task<Factura> GetByIdAsync(int id)
             {
                 return await _context.Facturas
-                .Include(p => p.Recetas)
                 .Include(p => p.MedicamentoVendidos)
                 .FirstOrDefaultAsync(p => p.Id == id);
             }

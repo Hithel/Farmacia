@@ -72,21 +72,21 @@ namespace Persistence.Data.Configuration;
                     builder
                 .HasMany(p => p.Recetas) /* TipoPresentacion */
                 .WithMany(r => r.Medicamentos)
-                .UsingEntity<MedicamentoReceta>(
+                .UsingEntity<MedicamentoVendido>(
 
                     j => j
                     .HasOne(et => et.Receta)
-                    .WithMany(et => et.MedicamentoRecetas)
+                    .WithMany(et => et.MedicamentoVendidos)
                     .HasForeignKey(el => el.IdRecetaFk),
 
                     j => j
                     .HasOne(pt => pt.Medicamento)
-                    .WithMany(t => t.MedicamentoRecetas)
+                    .WithMany(t => t.MedicamentoVendidos)
                     .HasForeignKey(ut => ut.IdMedicamentoFk),
                     
                     j =>
                     {
-                        j.ToTable("MedicamentoReceta");
+                        j.ToTable("MedicamentoVendido");
                         j.HasKey(t => new { t.IdMedicamentoFk, t.IdRecetaFk });
 
                     });

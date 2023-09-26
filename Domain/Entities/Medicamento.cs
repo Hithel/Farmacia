@@ -14,7 +14,6 @@ namespace Domain.Entities;
         public string Presentacion {get; set;}
         public int IdMarcaFk {get; set;}
         public Marca Marca {get; set;}
-        public ICollection<MedicamentoReceta> MedicamentoRecetas {get; set;}
         public ICollection<Receta> Recetas {get; set;}
         public ICollection<MedicamentoVendido> MedicamentoVendidos {get; set;}
         public ICollection<Factura> Facturas {get; set;}        

@@ -20,7 +20,6 @@ namespace Persistence;
             public DbSet<Marca> Marcas  { get; set; }
             public DbSet<Medicamento> Medicamentos  { get; set; }
             public DbSet<MedicamentoComprado> MedicamentoComprados  { get; set; }
-            public DbSet<MedicamentoReceta> MedicamentoRecetas  { get; set; }
             public DbSet<MedicamentoVendido> MedicamentoVendidos  { get; set; }
             public DbSet<Pais> Paises  { get; set; }
             public DbSet<Persona> Personas  { get; set; }

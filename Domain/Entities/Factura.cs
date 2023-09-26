@@ -14,5 +14,4 @@ namespace Domain.Entities;
 
         public ICollection<Medicamento> Medicamentos {get; set;}
         public ICollection<MedicamentoVendido> MedicamentoVendidos {get; set;}
-        public ICollection<Receta> Recetas {get; set;}
     }

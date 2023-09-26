@@ -33,9 +33,5 @@ namespace Persistence.Data.Configuration;
                 builder.HasOne(p => p.Paciente)
                 .WithMany(p => p.RecetasPac)
                 .HasForeignKey(p => p.IdPacienteFK);
-
-                builder.HasOne(p => p.Factura)
-                .WithMany(p => p.Recetas)
-                .HasForeignKey(p => p.IdFacturaFK);
             }
         }
