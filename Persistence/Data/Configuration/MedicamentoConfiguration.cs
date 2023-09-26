@@ -41,29 +41,11 @@ namespace Persistence.Data.Configuration;
 
             builder.HasOne(p => p.Marca)
             .WithMany(p => p.Medicamentos)
+            .HasForeignKey(p => p.IdCategoriaFK);
+
+            builder.HasOne(p => p.Marca)
+            .WithMany(p => p.Medicamentos)
             .HasForeignKey(p => p.IdMarcaFk);
-
-            builder
-            .HasMany(p => p.TiposPresentacion) /* TipoPresentacion */
-            .WithMany(r => r.Medicamentos)
-            .UsingEntity<Presentacion>(
-
-                j => j
-                .HasOne(et => et.TipoPresentacion)
-                .WithMany(et => et.Presentaciones)
-                .HasForeignKey(el => el.IdTipoPresentacionFk),
-
-                j => j
-                .HasOne(pt => pt.Medicamento)
-                .WithMany(t => t.Presentaciones)
-                .HasForeignKey(ut => ut.IdMedicamentoFk),
-
-                j =>
-                {
-                    j.ToTable("Presentacion");
-                    j.HasKey(t => new { t.IdMedicamentoFk, t.IdTipoPresentacionFk });
-
-                });
 
                 builder
                 .HasMany(p => p.Facturas) /* TipoPresentacion */

@@ -11,14 +11,12 @@ namespace Domain.Entities;
         public Boolean EstadoReceta {get; set;}
         public int IdCategoriaFK {get; set;}
         public Categoria Categoria {get; set;}
+        public string Presentacion {get; set;}
         public int IdMarcaFk {get; set;}
         public Marca Marca {get; set;}
         public ICollection<MedicamentoReceta> MedicamentoRecetas {get; set;}
         public ICollection<Receta> Recetas {get; set;}
         public ICollection<MedicamentoVendido> MedicamentoVendidos {get; set;}
-        public ICollection<Factura> Facturas {get; set;}
-        public ICollection<Presentacion> Presentaciones {get; set;}
-        public ICollection<TipoPresentacion> TiposPresentacion {get; set;} = new HashSet<TipoPresentacion>();
-        public ICollection<Marca> Marcas {get; set;}
+        public ICollection<Factura> Facturas {get; set;}        
         public ICollection<MedicamentoComprado> MedicamentoComprados {get; set;}
     }

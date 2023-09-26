@@ -26,7 +26,6 @@ namespace Persistence;
             public DbSet<Persona> Personas  { get; set; }
             public DbSet<PersonaContacto> PersonaContactos  { get; set; }
             public DbSet<PersonaDireccion> PersonaDirecciones  { get; set; }
-            public DbSet<Presentacion> Presentaciones  { get; set; }
             public DbSet<Proveedor> Proveedores  { get; set; }
             public DbSet<ProveedorContacto> ProveedorContactos  { get; set; }
             public DbSet<ProveedorDireccion> ProveedorDirecciones  { get; set; }
@@ -35,7 +34,6 @@ namespace Persistence;
             public DbSet<TipoContacto> TipoContactos  { get; set; }
             public DbSet<TipoDocumento> TipoDocumentos  { get; set; }
             public DbSet<TipoPersona> TipoPersonas  { get; set; }
-            public DbSet<TipoPresentacion> TipoPresentaciones  { get; set; }
             public DbSet<User> Users  { get; set; }
             protected override void OnModelCreating(ModelBuilder modelBuilder)
             {

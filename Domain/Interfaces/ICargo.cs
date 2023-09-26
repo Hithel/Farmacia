@@ -2,7 +2,7 @@ using Domain.Entities;
 
 namespace Domain.Interfaces;
 
-public interface ICargo : IGenericRepo<Receta>
+public interface ICargo : IGenericRepo<Cargo>
 {
     
 }

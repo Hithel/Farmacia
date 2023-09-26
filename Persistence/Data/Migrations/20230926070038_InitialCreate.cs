@@ -36,7 +36,7 @@ namespace Persistence.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nombre = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    nombre = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4")
                 },
                 constraints: table =>
@@ -57,6 +57,21 @@ namespace Persistence.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Estado", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "marca",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    nombre = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_marca", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -146,21 +161,6 @@ namespace Persistence.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TipoPersona", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "TipoPresentacion",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    nombre = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TipoPresentacion", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -258,7 +258,7 @@ namespace Persistence.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Nombre = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    nombre = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IdDepartamentoFk = table.Column<int>(type: "int", nullable: false)
                 },
@@ -450,22 +450,6 @@ namespace Persistence.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "marca",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    nombre = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    MedicamentoId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_marca", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "medicamento",
                 columns: table => new
                 {
@@ -479,6 +463,8 @@ namespace Persistence.Data.Migrations
                     IdEstadoFK = table.Column<int>(type: "int", nullable: false),
                     EstadoReceta = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     IdCategoriaFK = table.Column<int>(type: "int", nullable: false),
+                    Presentacion = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     IdMarcaFk = table.Column<int>(type: "int", nullable: false),
                     MedicamentoCompradoId = table.Column<int>(type: "int", nullable: true)
                 },
@@ -540,7 +526,8 @@ namespace Persistence.Data.Migrations
                 columns: table => new
                 {
                     IdMedicamentoFk = table.Column<int>(type: "int", nullable: false),
-                    IdFacturaFK = table.Column<int>(type: "int", nullable: false)
+                    IdFacturaFK = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -561,36 +548,12 @@ namespace Persistence.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Presentacion",
-                columns: table => new
-                {
-                    IdMedicamentoFk = table.Column<int>(type: "int", nullable: false),
-                    IdTipoPresentacionFk = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Presentacion", x => new { x.IdMedicamentoFk, x.IdTipoPresentacionFk });
-                    table.ForeignKey(
-                        name: "FK_Presentacion_TipoPresentacion_IdTipoPresentacionFk",
-                        column: x => x.IdTipoPresentacionFk,
-                        principalTable: "TipoPresentacion",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Presentacion_medicamento_IdMedicamentoFk",
-                        column: x => x.IdMedicamentoFk,
-                        principalTable: "medicamento",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "MedicamentoReceta",
                 columns: table => new
                 {
                     IdMedicamentoFk = table.Column<int>(type: "int", nullable: false),
-                    IdRecetaFk = table.Column<int>(type: "int", nullable: false)
+                    IdRecetaFk = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -681,11 +644,6 @@ namespace Persistence.Data.Migrations
                 column: "PersonaDoctorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_marca_MedicamentoId",
-                table: "marca",
-                column: "MedicamentoId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_medicamento_IdCategoriaFK",
                 table: "medicamento",
                 column: "IdCategoriaFK");
@@ -761,11 +719,6 @@ namespace Persistence.Data.Migrations
                 column: "IdPersonaFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Presentacion_IdTipoPresentacionFk",
-                table: "Presentacion",
-                column: "IdTipoPresentacionFk");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProveedorContacto_IdProveedorFk",
                 table: "ProveedorContacto",
                 column: "IdProveedorFk");
@@ -817,13 +770,6 @@ namespace Persistence.Data.Migrations
                 column: "IdRol");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_marca_medicamento_MedicamentoId",
-                table: "marca",
-                column: "MedicamentoId",
-                principalTable: "medicamento",
-                principalColumn: "Id");
-
-            migrationBuilder.AddForeignKey(
                 name: "FK_medicamento_MedicamentoComprado_MedicamentoCompradoId",
                 table: "medicamento",
                 column: "MedicamentoCompradoId",
@@ -867,12 +813,20 @@ namespace Persistence.Data.Migrations
                 table: "compraproveedor");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_marca_medicamento_MedicamentoId",
-                table: "marca");
+                name: "FK_medicamento_Estado_IdEstadoFK",
+                table: "medicamento");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_MedicamentoComprado_medicamento_IdMedicamentoFk",
-                table: "MedicamentoComprado");
+                name: "FK_medicamento_MedicamentoComprado_MedicamentoCompradoId",
+                table: "medicamento");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_medicamento_categoria_IdCategoriaFK",
+                table: "medicamento");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_medicamento_marca_IdMarcaFk",
+                table: "medicamento");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_MedicamentoReceta_medicamento_IdMedicamentoFk",
@@ -892,9 +846,6 @@ namespace Persistence.Data.Migrations
                 name: "PersonaDireccion");
 
             migrationBuilder.DropTable(
-                name: "Presentacion");
-
-            migrationBuilder.DropTable(
                 name: "ProveedorContacto");
 
             migrationBuilder.DropTable(
@@ -902,9 +853,6 @@ namespace Persistence.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "User");
-
-            migrationBuilder.DropTable(
-                name: "TipoPresentacion");
 
             migrationBuilder.DropTable(
                 name: "TipoContacto");
@@ -937,13 +885,13 @@ namespace Persistence.Data.Migrations
                 name: "Proveedor");
 
             migrationBuilder.DropTable(
-                name: "medicamento");
-
-            migrationBuilder.DropTable(
                 name: "Estado");
 
             migrationBuilder.DropTable(
                 name: "MedicamentoComprado");
+
+            migrationBuilder.DropTable(
+                name: "compraproveedor");
 
             migrationBuilder.DropTable(
                 name: "categoria");
@@ -952,7 +900,7 @@ namespace Persistence.Data.Migrations
                 name: "marca");
 
             migrationBuilder.DropTable(
-                name: "compraproveedor");
+                name: "medicamento");
 
             migrationBuilder.DropTable(
                 name: "Receta");

@@ -11,7 +11,7 @@ using Persistence;
 namespace Persistence.Data.Migrations
 {
     [DbContext(typeof(FarmaciaContext))]
-    [Migration("20230923103723_InitialCreate")]
+    [Migration("20230926070038_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -48,7 +48,8 @@ namespace Persistence.Data.Migrations
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nombre");
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("nombre");
 
                     b.HasKey("Id");
 
@@ -67,7 +68,8 @@ namespace Persistence.Data.Migrations
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(50)
-                        .HasColumnType("nombre");
+                        .HasColumnType("varchar(50)")
+                        .HasColumnName("nombre");
 
                     b.HasKey("Id");
 
@@ -178,9 +180,6 @@ namespace Persistence.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("MedicamentoId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -188,8 +187,6 @@ namespace Persistence.Data.Migrations
                         .HasColumnName("nombre");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MedicamentoId");
 
                     b.ToTable("marca", (string)null);
                 });
@@ -228,6 +225,9 @@ namespace Persistence.Data.Migrations
                     b.Property<decimal>("Precio")
                         .HasColumnType("decimal(10,10)")
                         .HasColumnName("precio");
+
+                    b.Property<string>("Presentacion")
+                        .HasColumnType("longtext");
 
                     b.Property<int>("Stock")
                         .HasMaxLength(6)
@@ -285,6 +285,9 @@ namespace Persistence.Data.Migrations
                     b.Property<int>("IdRecetaFk")
                         .HasColumnType("int");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
                     b.HasKey("IdMedicamentoFk", "IdRecetaFk");
 
                     b.HasIndex("IdRecetaFk");
@@ -298,6 +301,9 @@ namespace Persistence.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("IdFacturaFK")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.HasKey("IdMedicamentoFk", "IdFacturaFK");
@@ -412,21 +418,6 @@ namespace Persistence.Data.Migrations
                     b.HasIndex("IdPersonaFk");
 
                     b.ToTable("PersonaDireccion", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.Entities.Presentacion", b =>
-                {
-                    b.Property<int>("IdMedicamentoFk")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdTipoPresentacionFk")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdMedicamentoFk", "IdTipoPresentacionFk");
-
-                    b.HasIndex("IdTipoPresentacionFk");
-
-                    b.ToTable("Presentacion", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Proveedor", b =>
@@ -618,23 +609,6 @@ namespace Persistence.Data.Migrations
                     b.ToTable("TipoPersona", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.TipoPresentacion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)")
-                        .HasColumnName("nombre");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TipoPresentacion", (string)null);
-                });
-
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -725,13 +699,6 @@ namespace Persistence.Data.Migrations
                     b.Navigation("Persona");
 
                     b.Navigation("PersonaDoctor");
-                });
-
-            modelBuilder.Entity("Domain.Entities.Marca", b =>
-                {
-                    b.HasOne("Domain.Entities.Medicamento", null)
-                        .WithMany("Marcas")
-                        .HasForeignKey("MedicamentoId");
                 });
 
             modelBuilder.Entity("Domain.Entities.Medicamento", b =>
@@ -887,25 +854,6 @@ namespace Persistence.Data.Migrations
                     b.Navigation("Persona");
                 });
 
-            modelBuilder.Entity("Domain.Entities.Presentacion", b =>
-                {
-                    b.HasOne("Domain.Entities.Medicamento", "Medicamento")
-                        .WithMany("Presentaciones")
-                        .HasForeignKey("IdMedicamentoFk")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.Entities.TipoPresentacion", "TipoPresentacion")
-                        .WithMany("Presentaciones")
-                        .HasForeignKey("IdTipoPresentacionFk")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Medicamento");
-
-                    b.Navigation("TipoPresentacion");
-                });
-
             modelBuilder.Entity("Domain.Entities.ProveedorContacto", b =>
                 {
                     b.HasOne("Domain.Entities.Proveedor", "Proveedor")
@@ -1042,15 +990,11 @@ namespace Persistence.Data.Migrations
 
             modelBuilder.Entity("Domain.Entities.Medicamento", b =>
                 {
-                    b.Navigation("Marcas");
-
                     b.Navigation("MedicamentoComprados");
 
                     b.Navigation("MedicamentoRecetas");
 
                     b.Navigation("MedicamentoVendidos");
-
-                    b.Navigation("Presentaciones");
                 });
 
             modelBuilder.Entity("Domain.Entities.MedicamentoComprado", b =>
@@ -1114,11 +1058,6 @@ namespace Persistence.Data.Migrations
             modelBuilder.Entity("Domain.Entities.TipoPersona", b =>
                 {
                     b.Navigation("Personas");
-                });
-
-            modelBuilder.Entity("Domain.Entities.TipoPresentacion", b =>
-                {
-                    b.Navigation("Presentaciones");
                 });
 #pragma warning restore 612, 618
         }
