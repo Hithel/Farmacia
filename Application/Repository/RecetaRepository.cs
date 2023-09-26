@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -21,8 +18,7 @@ namespace Application.Repository;
         public override async Task<IEnumerable<Receta>> GetAllAsync()
         {
             return await _context.Recetas
-            
-            .Include(p => p.MedicamentoRecetas)
+            .Include(p => p.MedicamentoVendidos)
             
             .ToListAsync();
         }
@@ -30,8 +26,7 @@ namespace Application.Repository;
         public override async Task<Receta> GetByIdAsync(int id)
         {
             return await _context.Recetas
-
-            .Include(p => p.MedicamentoRecetas)
+            .Include(p => p.MedicamentoVendidos)
             
             .FirstOrDefaultAsync(p =>  p.Id == id);
         }
