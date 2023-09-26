@@ -1,5 +1,4 @@
 
-
 using APIFarmacia.Dtos;
 using AutoMapper;
 using Domain.Entities;
@@ -7,12 +6,12 @@ using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIFarmacia.Controllers;
-    public class RecetaController : ApiBaseController
+    public class TipoDocumentoController : ApiBaseController
     {
         private readonly IUnitOfWork unitofwork;
         private readonly IMapper mapper;
 
-        public RecetaController(IUnitOfWork unitofwork, IMapper mapper)
+        public TipoDocumentoController(IUnitOfWork unitofwork, IMapper mapper)
         {
             this.unitofwork = unitofwork;
             this.mapper = mapper;
@@ -22,10 +21,10 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<IEnumerable<RecetaDto>>> Get()
+        public async Task<ActionResult<IEnumerable<TipoDocumentoDto>>> Get()
         {
-            var Recetas = await unitofwork.Recetas.GetAllAsync();
-            return mapper.Map<List<RecetaDto>>(Recetas);
+            var TipoDocumento = await unitofwork.TipoDocumentos.GetAllAsync();
+            return mapper.Map<List<TipoDocumentoDto>>(TipoDocumento);
         }
 
         [HttpGet("{id}")]
@@ -33,46 +32,46 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<RecetaDto>> Get(int id)
+        public async Task<ActionResult<TipoDocumentoDto>> Get(int id)
         {
-            var Recetas = await unitofwork.Recetas.GetByIdAsync(id);
-            if (Recetas == null){
+            var TipoDocumentos = await unitofwork.TipoDocumentos.GetByIdAsync(id);
+            if (TipoDocumentos == null){
                 return NotFound();
             }
-            return this.mapper.Map<RecetaDto>(Recetas);
+            return this.mapper.Map<TipoDocumentoDto>(TipoDocumentos);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<Receta>> Post(RecetaDto RecetaDto)
+        public async Task<ActionResult<TipoDocumento>> Post(TipoDocumentoDto TipoDocumentoDto)
         {
-            var Recetas = this.mapper.Map<Receta>(RecetaDto);
-            this.unitofwork.Recetas.Add(Recetas);
+            var TipoDocumentos = this.mapper.Map<TipoDocumento>(TipoDocumentoDto);
+            this.unitofwork.TipoDocumentos.Add(TipoDocumentos);
             await unitofwork.SaveAsync();
-            if(Recetas == null)
+            if(TipoDocumentos == null)
             {
                 return BadRequest();
             }
-            Recetas.Id = Recetas.Id;
-            return CreatedAtAction(nameof(Post), new {id = Recetas.Id}, Recetas);
+            TipoDocumentos.Id = TipoDocumentos.Id;
+            return CreatedAtAction(nameof(Post), new {id = TipoDocumentos.Id}, TipoDocumentos);
         }
-        
+
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<RecetaDto>> Put(int id, [FromBody]RecetaDto RecetaDto){
-            if(RecetaDto == null)
+        public async Task<ActionResult<TipoContactoDto>> Put(int id, [FromBody]TipoContactoDto TipoContactoDto){
+            if(TipoContactoDto == null)
             {
                 return NotFound();
             }
-            var Recetas = this.mapper.Map<Receta>(RecetaDto);
-            unitofwork.Recetas.Update(Recetas);
+            var TipoDocumentos = this.mapper.Map<TipoDocumento>(TipoContactoDto);
+            unitofwork.TipoDocumentos.Update(TipoDocumentos);
             await unitofwork.SaveAsync();
-            return RecetaDto;
+            return TipoContactoDto;
         }
 
         [HttpDelete("{id}")]
@@ -80,13 +79,14 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<IActionResult> Delete(int id){
-            var Recetas = await unitofwork.Recetas.GetByIdAsync(id);
-            if(Recetas == null)
+            var TipoDocumentos = await unitofwork.TipoDocumentos.GetByIdAsync(id);
+            if(TipoDocumentos == null)
             {
                 return NotFound();
             }
-            unitofwork.Recetas.Remove(Recetas);
+            unitofwork.TipoDocumentos.Remove(TipoDocumentos);
             await unitofwork.SaveAsync();
             return NoContent();
         }
     }
+

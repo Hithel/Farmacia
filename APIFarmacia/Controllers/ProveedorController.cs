@@ -58,4 +58,35 @@ namespace APIFarmacia.Controllers;
             ProveedorDto.Id = Proveedor.Id;
             return CreatedAtAction(nameof(Post), new {id = Proveedor.Id}, Proveedor);
         }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<ActionResult<ProveedorDto>> Put(int id, [FromBody]ProveedorDto ProveedorDto){
+            if(ProveedorDto == null)
+            {
+                return NotFound();
+            }
+            var Proveedores = this.mapper.Map<Proveedor>(ProveedorDto);
+            unitofwork.Proveedores.Update(Proveedores);
+            await unitofwork.SaveAsync();
+            return ProveedorDto;
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+        public async Task<IActionResult> Delete(int id){
+            var Proveedores = await unitofwork.Proveedores.GetByIdAsync(id);
+            if(Proveedores == null)
+            {
+                return NotFound();
+            }
+            unitofwork.Proveedores.Remove(Proveedores);
+            await unitofwork.SaveAsync();
+            return NoContent();
+        }
     }
