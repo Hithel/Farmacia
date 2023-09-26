@@ -2,37 +2,40 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Repository;
+using Domain.Interfaces;
+using Persistence;
 
 namespace Application.UnitOfWork
 {
     public class UnitOfWork
     {
         
-        private readonly ApiContext _context;
+        private readonly FarmaciaContext _context;
 
-        private readonly CargoRepository _cargos;
-        private readonly CategoriaRepository _categorias;
-        private readonly CiudadRepository _ciudades;         
-        private readonly CompraProveedor _compraProveedor;
-        private readonly Departamento _departamentos;
-        private readonly Estado _estados;
-        private readonly Factura _facturas;
-        private readonly Marca _marcas;
-        private readonly Medicamento _medicamentos;
-        private readonly MedicamentoComprado _medicamentoComprados;
-        private readonly Pais _paises;
-        private readonly Persona _personas;
-        private readonly PersonaContacto _personaContactos;
-        private readonly PersonaDireccion _personaDirecciones;
-        private readonly Proveedor _proveedores;
-        private readonly ProveedorContacto _proveedorContactos;
-        private readonly ProveedorDireccion _proveedorDirecciones;
-        private readonly Receta _recetas;
-        private readonly Rol _roles;
-        private readonly TipoContacto _tipoContactos;
-        private readonly TipoDocumento _tipoDocumentos;
-        private readonly TipoPersona _tipoPersonas;
-        private readonly User _users;
+        private CargoRepository _cargos;
+        private CategoriaRepository _categorias;
+        private CiudadRepository _ciudades;         
+        private CompraProveedorRepository _compraProveedor;
+        private DepartamentoRepository _departamentos;
+        private EstadoRepository _estados;
+        private FacturaRepository _facturas;
+        private MarcaRepository _marcas;
+        private MedicamentoRepository _medicamentos;
+        private MedicamentoCompradoRepository _medicamentoComprados;
+        private PaisRepository _paises;
+        private PersonaRepository _personas;
+        private PersonaContactoRepository _personaContactos;
+        private PersonaDireccionRepository _personaDirecciones;
+        private ProveedorRepository _proveedores;
+        private ProveedorContactoRepository _proveedorContactos;
+        private ProveedorDireccionRepository _proveedorDirecciones;
+        private RecetaRepository _recetas;
+        private RolRepository _roles;
+        private TipoContactoRepository _tipoContactos;
+        private TipoDocumentoRepository _tipoDocumentos;
+        private TipoPersonaRepository _tipoPersonas;
+        private UserRepository _users;
 
         
         public ICargo Cargos
