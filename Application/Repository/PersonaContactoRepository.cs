@@ -21,7 +21,8 @@ public class PersonaContactoRepository: GenericRepository<PersonaContacto>, IPer
     public override async Task<IEnumerable<PersonaContacto>> GetAllAsync()
     {
         return await _context.PersonaContactos
-        
+
+            .Include(p=> p.TipoContacto)
             .ToListAsync();
     }
 
@@ -29,6 +30,7 @@ public class PersonaContactoRepository: GenericRepository<PersonaContacto>, IPer
     {
         return await _context.PersonaContactos
         
+        .Include(p=> p.TipoContacto)
         .FirstOrDefaultAsync(p =>  p.Id == id);
     }
 }
