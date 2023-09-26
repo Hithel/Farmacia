@@ -7,12 +7,12 @@ using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace APIFarmacia.Controllers;
-    public class RecetaController : ApiBaseController
+    public class TipoPersonaController : ApiBaseController
     {
         private readonly IUnitOfWork unitofwork;
         private readonly IMapper mapper;
 
-        public RecetaController(IUnitOfWork unitofwork, IMapper mapper)
+        public TipoPersonaController(IUnitOfWork unitofwork, IMapper mapper)
         {
             this.unitofwork = unitofwork;
             this.mapper = mapper;
@@ -22,10 +22,10 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<IEnumerable<RecetaDto>>> Get()
+        public async Task<ActionResult<IEnumerable<TipoPersonaDto>>> Get()
         {
-            var Recetas = await unitofwork.Recetas.GetAllAsync();
-            return mapper.Map<List<RecetaDto>>(Recetas);
+            var TipoPersonas = await unitofwork.TipoPersonas.GetAllAsync();
+            return mapper.Map<List<TipoPersonaDto>>(TipoPersonas);
         }
 
         [HttpGet("{id}")]
@@ -33,46 +33,46 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<RecetaDto>> Get(int id)
+        public async Task<ActionResult<TipoPersonaDto>> Get(int id)
         {
-            var Recetas = await unitofwork.Recetas.GetByIdAsync(id);
-            if (Recetas == null){
+            var TipoPersonas = await unitofwork.TipoPersonas.GetByIdAsync(id);
+            if (TipoPersonas == null){
                 return NotFound();
             }
-            return this.mapper.Map<RecetaDto>(Recetas);
+            return this.mapper.Map<TipoPersonaDto>(TipoPersonas);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<Receta>> Post(RecetaDto RecetaDto)
+        public async Task<ActionResult<TipoPersona>> Post(TipoPersonaDto TipoPersonaDto)
         {
-            var Recetas = this.mapper.Map<Receta>(RecetaDto);
-            this.unitofwork.Recetas.Add(Recetas);
+            var TipoPersonas = this.mapper.Map<TipoPersona>(TipoPersonaDto);
+            this.unitofwork.TipoPersonas.Add(TipoPersonas);
             await unitofwork.SaveAsync();
-            if(Recetas == null)
+            if(TipoPersonas == null)
             {
                 return BadRequest();
             }
-            Recetas.Id = Recetas.Id;
-            return CreatedAtAction(nameof(Post), new {id = Recetas.Id}, Recetas);
+            TipoPersonas.Id = TipoPersonas.Id;
+            return CreatedAtAction(nameof(Post), new {id = TipoPersonas.Id}, TipoPersonas);
         }
-        
+
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<RecetaDto>> Put(int id, [FromBody]RecetaDto RecetaDto){
-            if(RecetaDto == null)
+        public async Task<ActionResult<TipoPersonaDto>> Put(int id, [FromBody]TipoPersonaDto TipoPersonaDto){
+            if(TipoPersonaDto == null)
             {
                 return NotFound();
             }
-            var Recetas = this.mapper.Map<Receta>(RecetaDto);
-            unitofwork.Recetas.Update(Recetas);
+            var TipoPersonas = this.mapper.Map<TipoPersona>(TipoPersonaDto);
+            unitofwork.TipoPersonas.Update(TipoPersonas);
             await unitofwork.SaveAsync();
-            return RecetaDto;
+            return TipoPersonaDto;
         }
 
         [HttpDelete("{id}")]
@@ -80,12 +80,12 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<IActionResult> Delete(int id){
-            var Recetas = await unitofwork.Recetas.GetByIdAsync(id);
-            if(Recetas == null)
+            var TipoPersonas = await unitofwork.TipoPersonas.GetByIdAsync(id);
+            if(TipoPersonas == null)
             {
                 return NotFound();
             }
-            unitofwork.Recetas.Remove(Recetas);
+            unitofwork.TipoPersonas.Remove(TipoPersonas);
             await unitofwork.SaveAsync();
             return NoContent();
         }

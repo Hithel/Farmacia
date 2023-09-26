@@ -11,6 +11,10 @@ namespace API.Profiles;
             CreateMap<ProveedorDireccion, ProveedorDireccionDto>().ReverseMap();
             CreateMap<Proveedor, ProveedorDto>().ReverseMap();
             CreateMap<Receta, RecetaDto>().ReverseMap();
+            CreateMap<TipoContacto, TipoContactoDto>().ReverseMap();
+            CreateMap<TipoDocumento, TipoContactoDto>().ReverseMap();
+            CreateMap<TipoPersona, TipoPersonaDto>().ReverseMap();
+
 
 
             // CreateMap<Departamento, DepartamentoDto>().ReverseMap();
