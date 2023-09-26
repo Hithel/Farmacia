@@ -1,14 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Application.Repository;
 using Domain.Interfaces;
 using Persistence;
 
 namespace Application.UnitOfWork
 {
-    public class UnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         
         private readonly FarmaciaContext _context;
