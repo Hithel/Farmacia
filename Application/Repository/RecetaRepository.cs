@@ -27,7 +27,7 @@ namespace Application.Repository;
         {
             return await _context.Recetas
 
-            .Include(p => p.MedicamentoRecetas)
+            .Include(p => p.MedicamentoVendidos)
             
             .FirstOrDefaultAsync(p =>  p.Id == id);
         }
