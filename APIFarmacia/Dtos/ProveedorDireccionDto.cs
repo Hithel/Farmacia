@@ -1,14 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+
+using Domain.Entities;
 
 namespace APIFarmacia.Dtos;
-
-    public class ProveedorDireccionDto
+    public class ProveedorDireccionDto : BaseEntity
     {
-        public int Id {get; set;}
         public string Descripcion {get; set;}
-        public int IdCiudadFk {get; set;}
-        public int IdProveedorFk {get; set;}
+
+        /*llaves*/
+        public Ciudad Ciudad {get; set;}
+        public Proveedor Proveedor {get; set;}
     }

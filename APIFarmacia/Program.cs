@@ -1,3 +1,6 @@
+using System.Reflection;
+using APIFarmacia.Extensions;
+using AspNetCoreRateLimit;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -5,12 +8,14 @@ using Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddApplicationServices();
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.ConfigureRateLimit();
+// builder.Services.ConfigureApiVersioning();
 
 builder.Services.AddDbContext<FarmaciaContext>(options =>
 {
@@ -25,6 +30,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseIpRateLimiting();
 }
 
 app.UseHttpsRedirection();

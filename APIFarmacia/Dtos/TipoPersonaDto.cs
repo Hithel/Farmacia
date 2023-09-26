@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+
+using Domain.Entities;
 
 namespace APIFarmacia.Dtos;
-
-    public class TipoPersonaDto
+    public class TipoPersonaDto : BaseEntity
     {
-        public int Id {get; set;}
         public int Descripcion {get; set;}
     }
