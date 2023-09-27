@@ -15,6 +15,7 @@ namespace Application.Repository;
             _context = context;
         }
     
+        // Implementacion de nuevos metodos para traer datos de la bd relacionados.
         public override async Task<IEnumerable<Factura>> GetAllAsync()
             {
                 return await _context.Facturas

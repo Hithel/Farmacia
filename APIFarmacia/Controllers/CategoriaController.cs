@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIFarmacia.Controllers;
 
-    public class CargoController : ApiBaseController
+    public class CategoriaController : ApiBaseController
     {
         private readonly IUnitOfWork unitofwork;
         private readonly IMapper mapper;
     
-        public CargoController(IUnitOfWork unitOfWork, IMapper mapper)
+        public CategoriaController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitofwork = unitOfWork;
             this.mapper = mapper;
@@ -24,10 +24,10 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<IEnumerable<CargoDto>>> Get()
+        public async Task<ActionResult<IEnumerable<CategoriaDto>>> Get()
         {
-            var cargo = await unitofwork.Cargos.GetAllAsync();
-            return mapper.Map<List<CargoDto>>(cargo);
+            var categoria = await unitofwork.Categorias.GetAllAsync();
+            return mapper.Map<List<CategoriaDto>>(categoria);
         }
 
         [HttpGet("{id}")]
@@ -35,30 +35,30 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CargoDto>> Get(int id)
+        public async Task<ActionResult<CategoriaDto>> Get(int id)
         {
-            var cargo = await unitofwork.Cargos.GetByIdAsync(id);
-            if (cargo == null){
+            var categoria = await unitofwork.Categorias.GetByIdAsync(id);
+            if (categoria == null){
                 return NotFound();
             }
-            return this.mapper.Map<CargoDto>(cargo);
+            return this.mapper.Map<CategoriaDto>(categoria);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<Cargo>> Post(CargoDto marcaDto)
+        public async Task<ActionResult<Categoria>> Post(CategoriaDto categoriaDto)
         {
-            var cargo = this.mapper.Map<Cargo>(marcaDto);
-            this.unitofwork.Cargos.Add(cargo);
+            var categoria = this.mapper.Map<Categoria>(categoriaDto);
+            this.unitofwork.Categorias.Add(categoria);
             await unitofwork.SaveAsync();
-            if(cargo == null)
+            if(categoria == null)
             {
                 return BadRequest();
             }
-            marcaDto.Id = cargo.Id;
-            return CreatedAtAction(nameof(Post), new {id = marcaDto.Id}, marcaDto);
+            categoriaDto.Id = categoria.Id;
+            return CreatedAtAction(nameof(Post), new {id = categoriaDto.Id}, categoriaDto);
         }
         
         [HttpPut("{id}")]
@@ -66,15 +66,15 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CargoDto>> Put(int id, [FromBody]CargoDto marcaDto){
-            if(marcaDto == null)
+        public async Task<ActionResult<CategoriaDto>> Put(int id, [FromBody]CategoriaDto categoriaDto){
+            if(categoriaDto == null)
             {
                 return NotFound();
             }
-            var cargo = this.mapper.Map<Cargo>(marcaDto);
-            unitofwork.Cargos.Update(cargo);
+            var categoria = this.mapper.Map<Categoria>(categoriaDto);
+            unitofwork.Categorias.Update(categoria);
             await unitofwork.SaveAsync();
-            return marcaDto;
+            return categoriaDto;
         }
 
         [HttpDelete("{id}")]
@@ -82,12 +82,12 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<IActionResult> Delete(int id){
-            var cargo = await unitofwork.Cargos.GetByIdAsync(id);
-            if(cargo == null)
+            var categoria = await unitofwork.Categorias.GetByIdAsync(id);
+            if(categoria == null)
             {
                 return NotFound();
             }
-            unitofwork.Cargos.Remove(cargo);
+            unitofwork.Categorias.Remove(categoria);
             await unitofwork.SaveAsync();
             return NoContent();
         }

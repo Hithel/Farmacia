@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIFarmacia.Controllers;
 
-    public class CargoController : ApiBaseController
+    public class CompraProveedorController : ApiBaseController
     {
         private readonly IUnitOfWork unitofwork;
         private readonly IMapper mapper;
     
-        public CargoController(IUnitOfWork unitOfWork, IMapper mapper)
+        public CompraProveedorController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitofwork = unitOfWork;
             this.mapper = mapper;
@@ -24,10 +24,10 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<IEnumerable<CargoDto>>> Get()
+        public async Task<ActionResult<IEnumerable<CompraProveedorDto>>> Get()
         {
-            var cargo = await unitofwork.Cargos.GetAllAsync();
-            return mapper.Map<List<CargoDto>>(cargo);
+            var compraproveedor = await unitofwork.CompraProveedores.GetAllAsync();
+            return mapper.Map<List<CompraProveedorDto>>(compraproveedor);
         }
 
         [HttpGet("{id}")]
@@ -35,30 +35,30 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CargoDto>> Get(int id)
+        public async Task<ActionResult<CompraProveedorDto>> Get(int id)
         {
-            var cargo = await unitofwork.Cargos.GetByIdAsync(id);
-            if (cargo == null){
+            var compraproveedor = await unitofwork.CompraProveedores.GetByIdAsync(id);
+            if (compraproveedor == null){
                 return NotFound();
             }
-            return this.mapper.Map<CargoDto>(cargo);
+            return this.mapper.Map<CompraProveedorDto>(compraproveedor);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<Cargo>> Post(CargoDto marcaDto)
+        public async Task<ActionResult<CompraProveedor>> Post(CompraProveedorDto compraProveedorDto)
         {
-            var cargo = this.mapper.Map<Cargo>(marcaDto);
-            this.unitofwork.Cargos.Add(cargo);
+            var compraproveedor = this.mapper.Map<CompraProveedor>(compraProveedorDto);
+            this.unitofwork.CompraProveedores.Add(compraproveedor);
             await unitofwork.SaveAsync();
-            if(cargo == null)
+            if(compraproveedor == null)
             {
                 return BadRequest();
             }
-            marcaDto.Id = cargo.Id;
-            return CreatedAtAction(nameof(Post), new {id = marcaDto.Id}, marcaDto);
+            compraProveedorDto.Id = compraproveedor.Id;
+            return CreatedAtAction(nameof(Post), new {id = compraProveedorDto.Id}, compraProveedorDto);
         }
         
         [HttpPut("{id}")]
@@ -66,15 +66,15 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CargoDto>> Put(int id, [FromBody]CargoDto marcaDto){
-            if(marcaDto == null)
+        public async Task<ActionResult<CompraProveedorDto>> Put(int id, [FromBody]CompraProveedorDto compraProveedorDto){
+            if(compraProveedorDto == null)
             {
                 return NotFound();
             }
-            var cargo = this.mapper.Map<Cargo>(marcaDto);
-            unitofwork.Cargos.Update(cargo);
+            var compraproveedor = this.mapper.Map<CompraProveedor>(compraProveedorDto);
+            unitofwork.CompraProveedores.Update(compraproveedor);
             await unitofwork.SaveAsync();
-            return marcaDto;
+            return compraProveedorDto;
         }
 
         [HttpDelete("{id}")]
@@ -82,12 +82,12 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<IActionResult> Delete(int id){
-            var cargo = await unitofwork.Cargos.GetByIdAsync(id);
-            if(cargo == null)
+            var compraproveedor = await unitofwork.CompraProveedores.GetByIdAsync(id);
+            if(compraproveedor == null)
             {
                 return NotFound();
             }
-            unitofwork.Cargos.Remove(cargo);
+            unitofwork.CompraProveedores.Remove(compraproveedor);
             await unitofwork.SaveAsync();
             return NoContent();
         }

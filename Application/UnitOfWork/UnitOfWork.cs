@@ -35,7 +35,7 @@ namespace Application.UnitOfWork
         private TipoPersonaRepository _tipoPersonas;
         private UserRepository _users;
 
-        
+        // Controll de nulos para los repositorios
         public ICargo Cargos
         {
             get
@@ -72,7 +72,7 @@ namespace Application.UnitOfWork
             }
         }
 
-        public ICompraProveedor CompraProveedor
+        public ICompraProveedor CompraProveedores
         {
             get
             {

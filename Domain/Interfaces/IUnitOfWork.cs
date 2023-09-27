@@ -5,7 +5,7 @@ namespace Domain.Interfaces;
         ICargo Cargos { get; }
         ICategoria Categorias { get; }
         ICiudad Ciudades { get; }
-        ICompraProveedor CompraProveedor { get; }
+        ICompraProveedor CompraProveedores { get; }
         IDepartamento Departamentos { get; }
         IEstado Estados { get; }
         IFactura Facturas { get; }

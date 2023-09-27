@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIFarmacia.Controllers;
 
-    public class CargoController : ApiBaseController
+    public class CiudadController : ApiBaseController
     {
         private readonly IUnitOfWork unitofwork;
         private readonly IMapper mapper;
     
-        public CargoController(IUnitOfWork unitOfWork, IMapper mapper)
+        public CiudadController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitofwork = unitOfWork;
             this.mapper = mapper;
@@ -24,10 +24,10 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<IEnumerable<CargoDto>>> Get()
+        public async Task<ActionResult<IEnumerable<CiudadDto>>> Get()
         {
-            var cargo = await unitofwork.Cargos.GetAllAsync();
-            return mapper.Map<List<CargoDto>>(cargo);
+            var ciudad = await unitofwork.Ciudades.GetAllAsync();
+            return mapper.Map<List<CiudadDto>>(ciudad);
         }
 
         [HttpGet("{id}")]
@@ -35,30 +35,30 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CargoDto>> Get(int id)
+        public async Task<ActionResult<CiudadDto>> Get(int id)
         {
-            var cargo = await unitofwork.Cargos.GetByIdAsync(id);
-            if (cargo == null){
+            var ciudad = await unitofwork.Ciudades.GetByIdAsync(id);
+            if (ciudad == null){
                 return NotFound();
             }
-            return this.mapper.Map<CargoDto>(cargo);
+            return this.mapper.Map<CiudadDto>(ciudad);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<Cargo>> Post(CargoDto marcaDto)
+        public async Task<ActionResult<Ciudad>> Post(CiudadDto ciudadDto)
         {
-            var cargo = this.mapper.Map<Cargo>(marcaDto);
-            this.unitofwork.Cargos.Add(cargo);
+            var ciudad = this.mapper.Map<Ciudad>(ciudadDto);
+            this.unitofwork.Ciudades.Add(ciudad);
             await unitofwork.SaveAsync();
-            if(cargo == null)
+            if(ciudad == null)
             {
                 return BadRequest();
             }
-            marcaDto.Id = cargo.Id;
-            return CreatedAtAction(nameof(Post), new {id = marcaDto.Id}, marcaDto);
+            ciudadDto.Id = ciudad.Id;
+            return CreatedAtAction(nameof(Post), new {id = ciudadDto.Id}, ciudadDto);
         }
         
         [HttpPut("{id}")]
@@ -66,15 +66,15 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CargoDto>> Put(int id, [FromBody]CargoDto marcaDto){
-            if(marcaDto == null)
+        public async Task<ActionResult<CiudadDto>> Put(int id, [FromBody]CiudadDto ciudadDto){
+            if(ciudadDto == null)
             {
                 return NotFound();
             }
-            var cargo = this.mapper.Map<Cargo>(marcaDto);
-            unitofwork.Cargos.Update(cargo);
+            var ciudad = this.mapper.Map<Ciudad>(ciudadDto);
+            unitofwork.Ciudades.Update(ciudad);
             await unitofwork.SaveAsync();
-            return marcaDto;
+            return ciudadDto;
         }
 
         [HttpDelete("{id}")]
@@ -82,12 +82,12 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<IActionResult> Delete(int id){
-            var cargo = await unitofwork.Cargos.GetByIdAsync(id);
-            if(cargo == null)
+            var ciudad = await unitofwork.Ciudades.GetByIdAsync(id);
+            if(ciudad == null)
             {
                 return NotFound();
             }
-            unitofwork.Cargos.Remove(cargo);
+            unitofwork.Ciudades.Remove(ciudad);
             await unitofwork.SaveAsync();
             return NoContent();
         }
