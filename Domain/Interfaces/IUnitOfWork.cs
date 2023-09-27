@@ -12,6 +12,7 @@ namespace Domain.Interfaces;
         IMarca Marcas { get; }
         IMedicamento Medicamentos { get; }
         IMedicamentoComprado MedicamentoComprados { get; }
+        IMedicamentoVendido MedicamentoVendidos {get; }
         IPais Paises { get; }
         IPersona Personas { get; }
         IPersonaContacto PersonaContactos { get; }

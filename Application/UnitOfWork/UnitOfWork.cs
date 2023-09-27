@@ -19,6 +19,7 @@ namespace Application.UnitOfWork
         private FacturaRepository _facturas;
         private MarcaRepository _marcas;
         private MedicamentoRepository _medicamentos;
+        private MedicamentoVendidoRepository _medicamentoVendidos;
         private MedicamentoCompradoRepository _medicamentoComprados;
         private PaisRepository _paises;
         private PersonaRepository _personas;
@@ -152,6 +153,18 @@ namespace Application.UnitOfWork
                     _medicamentoComprados = new MedicamentoCompradoRepository(_context);
                 }
                 return _medicamentoComprados;
+            }
+        }
+
+            public IMedicamentoVendido MedicamentoVendidos
+        {
+            get
+            {
+                if (_medicamentoVendidos== null)
+                {
+                    _medicamentoVendidos = new MedicamentoVendidoRepository(_context);
+                }
+                return _medicamentoVendidos;
             }
         }
 

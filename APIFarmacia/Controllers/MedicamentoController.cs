@@ -1,4 +1,6 @@
 
+
+
 using APIFarmacia.Dtos;
 using AutoMapper;
 using Domain.Entities;
@@ -7,28 +9,25 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIFarmacia.Controllers;
 
-    public class CargoController : ApiBaseController
+    public class MedicamentoController : ApiBaseController
     {
         private readonly IUnitOfWork unitofwork;
         private readonly IMapper mapper;
-    
-        public CargoController(IUnitOfWork unitOfWork, IMapper mapper)
-        {
-            this.unitofwork = unitOfWork;
 
+        public MedicamentoController(IUnitOfWork unitofwork, IMapper mapper)
+        {
+            this.unitofwork = unitofwork;
             this.mapper = mapper;
         }
-    
-    
-    [HttpGet]
+        [HttpGet]
         [MapToApiVersion("1.0")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<IEnumerable<CargoDto>>> Get()
+        public async Task<ActionResult<IEnumerable<MedicamentoDto>>> Get()
         {
-            var Cargos = await unitofwork.Cargos.GetAllAsync();
-            return mapper.Map<List<CargoDto>>(Cargos);
+            var Medicamento = await unitofwork.Medicamentos.GetAllAsync();
+            return mapper.Map<List<MedicamentoDto>>(Medicamento);
         }
 
         [HttpGet("{id}")]
@@ -36,46 +35,46 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CargoDto>> Get(int id)
+        public async Task<ActionResult<MedicamentoDto>> Get(int id)
         {
-            var Cargos = await unitofwork.Cargos.GetByIdAsync(id);
-            if (Cargos == null){
+            var Medicamento = await unitofwork.Medicamentos.GetByIdAsync(id);
+            if (Medicamento == null){
                 return NotFound();
             }
-            return this.mapper.Map<CargoDto>(Cargos);
+            return this.mapper.Map<MedicamentoDto>(Medicamento);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<Cargo>> Post(CargoDto CargoDto)
+        public async Task<ActionResult<Medicamento>> Post(MedicamentoDto MedicamentoDto)
         {
-            var Cargos = this.mapper.Map<Cargo>(CargoDto);
-            this.unitofwork.Cargos.Add(Cargos);
+            var Medicamento = this.mapper.Map<Medicamento>(MedicamentoDto);
+            this.unitofwork.Medicamentos.Add(Medicamento);
             await unitofwork.SaveAsync();
-            if(Cargos == null)
+            if(Medicamento == null)
             {
                 return BadRequest();
             }
-            CargoDto.Id = Cargos.Id;
-            return CreatedAtAction(nameof(Post), new {id = Cargos.Id}, Cargos);
+            MedicamentoDto.Id = Medicamento.Id;
+            return CreatedAtAction(nameof(Post), new {id = Medicamento.Id}, Medicamento);
         }
-        
+
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CargoDto>> Put(int id, [FromBody]CargoDto CargoDto){
-            if(CargoDto == null)
+        public async Task<ActionResult<MedicamentoDto>> Put(int id, [FromBody]MedicamentoDto MedicamentoDto){
+            if(MedicamentoDto == null)
             {
                 return NotFound();
             }
-            var Cargos = this.mapper.Map<Cargo>(CargoDto);
-            unitofwork.Cargos.Update(Cargos);
+            var Medicamentos = this.mapper.Map<Medicamento>(MedicamentoDto);
+            unitofwork.Medicamentos.Update(Medicamentos);
             await unitofwork.SaveAsync();
-            return CargoDto;
+            return MedicamentoDto;
         }
 
         [HttpDelete("{id}")]
@@ -83,13 +82,13 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<IActionResult> Delete(int id){
-            var Cargos = await unitofwork.Cargos.GetByIdAsync(id);
-            if(Cargos == null)
+            var Medicamentos = await unitofwork.Medicamentos.GetByIdAsync(id);
+            if(Medicamentos == null)
             {
                 return NotFound();
             }
-            unitofwork.Cargos.Remove(Cargos);
+            unitofwork.Medicamentos.Remove(Medicamentos);
             await unitofwork.SaveAsync();
             return NoContent();
         }
-    } 
+    }
