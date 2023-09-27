@@ -14,6 +14,14 @@ namespace API.Profiles;
             CreateMap<TipoContacto, TipoContactoDto>().ReverseMap();
             CreateMap<TipoDocumento, TipoContactoDto>().ReverseMap();
             CreateMap<TipoPersona, TipoPersonaDto>().ReverseMap();
+            CreateMap<MedicamentoComprado, MedicamentoCompradoDto>().ReverseMap();
+            CreateMap<Medicamento, MedicamentoDto>().ReverseMap();
+            CreateMap<MedicamentoVendido, MedicamentoVendidoDto>().ReverseMap();
+            CreateMap<Pais, PaisDto>().ReverseMap();
+            CreateMap<PersonaContacto, PersonaContactoDto>().ReverseMap();
+            CreateMap<Persona, PersonaDto>().ReverseMap();
+            CreateMap<Rol, RolDto>().ReverseMap();
+
 
 
 
