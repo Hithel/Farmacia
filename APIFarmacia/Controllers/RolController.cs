@@ -1,3 +1,5 @@
+
+
 using APIFarmacia.Dtos;
 using AutoMapper;
 using Domain.Entities;
@@ -6,12 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIFarmacia.Controllers
 {
-    public class PersonaController:ApiBaseController
+    public class RolController:ApiBaseController
     {
         private readonly IUnitOfWork unitofwork;
         private readonly IMapper mapper;
 
-        public PersonaController(IUnitOfWork unitofwork, IMapper mapper)
+        public RolController(IUnitOfWork unitofwork, IMapper mapper)
         {
             this.unitofwork = unitofwork;
             this.mapper = mapper;
@@ -21,10 +23,10 @@ namespace APIFarmacia.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<IEnumerable<PersonaDto>>> Get()
+        public async Task<ActionResult<IEnumerable<RolDto>>> Get()
         {
-            var Persona = await unitofwork.Personas.GetAllAsync();
-            return mapper.Map<List<PersonaDto>>(Persona);
+            var Rol = await unitofwork.Roles.GetAllAsync();
+            return mapper.Map<List<RolDto>>(Rol);
         }
 
         [HttpGet("{id}")]
@@ -32,30 +34,30 @@ namespace APIFarmacia.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<PersonaDto>> Get(int id)
+        public async Task<ActionResult<RolDto>> Get(int id)
         {
-            var Persona = await unitofwork.Personas.GetByIdAsync(id);
-            if (Persona == null){
+            var Rol = await unitofwork.Roles.GetByIdAsync(id);
+            if (Rol == null){
                 return NotFound();
             }
-            return this.mapper.Map<PersonaDto>(Persona);
+            return this.mapper.Map<RolDto>(Rol);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<Persona>> Post(PersonaDto PersonaDto)
+        public async Task<ActionResult<Rol>> Post(RolDto RolDto)
         {
-            var Persona = this.mapper.Map<Persona>(PersonaDto);
-            this.unitofwork.Personas.Add(Persona);
+            var Rol = this.mapper.Map<Rol>(RolDto);
+            this.unitofwork.Roles.Add(Rol);
             await unitofwork.SaveAsync();
-            if(Persona == null)
+            if(Rol == null)
             {
                 return BadRequest();
             }
-            PersonaDto.Id = Persona.Id;
-            return CreatedAtAction(nameof(Post), new {id = Persona.Id}, Persona);
+            RolDto.Id = Rol.Id;
+            return CreatedAtAction(nameof(Post), new {id = Rol.Id}, Rol);
         }
 
         [HttpPut("{id}")]
@@ -63,15 +65,15 @@ namespace APIFarmacia.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<PersonaDto>> Put(int id, [FromBody]PersonaDto PersonaDto){
-            if(PersonaDto == null)
+        public async Task<ActionResult<RolDto>> Put(int id, [FromBody]RolDto RolDto){
+            if(RolDto == null)
             {
                 return NotFound();
             }
-            var Personas = this.mapper.Map<Persona>(PersonaDto);
-            unitofwork.Personas.Update(Personas);
+            var Roles = this.mapper.Map<Rol>(RolDto);
+            unitofwork.Roles.Update(Roles);
             await unitofwork.SaveAsync();
-            return PersonaDto;
+            return RolDto;
         }
 
         [HttpDelete("{id}")]
@@ -79,12 +81,12 @@ namespace APIFarmacia.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<IActionResult> Delete(int id){
-            var Personas = await unitofwork.Personas.GetByIdAsync(id);
-            if(Personas == null)
+            var Roles = await unitofwork.Roles.GetByIdAsync(id);
+            if(Roles == null)
             {
                 return NotFound();
             }
-            unitofwork.Personas.Remove(Personas);
+            unitofwork.Roles.Remove(Roles);
             await unitofwork.SaveAsync();
             return NoContent();
         }
