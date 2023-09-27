@@ -35,6 +35,11 @@ namespace Application.UnitOfWork
         private TipoPersonaRepository _tipoPersonas;
         private UserRepository _users;
 
+        public UnitOfWork (FarmaciaContext context)
+        {
+            _context = context;
+        }
+
         // Controll de nulos para los repositorios
         public ICargo Cargos
         {
