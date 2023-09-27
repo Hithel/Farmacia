@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Domain.Entities;
 
 namespace APIFarmacia.Dtos;
 
-    public class PaisDto
+    public class PaisDto:BaseEntity
     {
-        public int Id {get; set;}
         public string Nombre {get; set;}
     }
