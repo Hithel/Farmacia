@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIFarmacia.Controllers;
 
-    public class CargoController : ApiBaseController
+    public class DepartamentoController : ApiBaseController
     {
         private readonly IUnitOfWork unitofwork;
         private readonly IMapper mapper;
     
-        public CargoController(IUnitOfWork unitOfWork, IMapper mapper)
+        public DepartamentoController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitofwork = unitOfWork;
             this.mapper = mapper;
@@ -24,10 +24,10 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<IEnumerable<CargoDto>>> Get()
+        public async Task<ActionResult<IEnumerable<DepartamentoDto>>> Get()
         {
-            var cargo = await unitofwork.Cargos.GetAllAsync();
-            return mapper.Map<List<CargoDto>>(cargo);
+            var departamento = await unitofwork.Departamentos.GetAllAsync();
+            return mapper.Map<List<DepartamentoDto>>(departamento);
         }
 
         [HttpGet("{id}")]
@@ -35,30 +35,30 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CargoDto>> Get(int id)
+        public async Task<ActionResult<DepartamentoDto>> Get(int id)
         {
-            var cargo = await unitofwork.Cargos.GetByIdAsync(id);
-            if (cargo == null){
+            var departamento = await unitofwork.Departamentos.GetByIdAsync(id);
+            if (departamento == null){
                 return NotFound();
             }
-            return this.mapper.Map<CargoDto>(cargo);
+            return this.mapper.Map<DepartamentoDto>(departamento);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<Cargo>> Post(CargoDto marcaDto)
+        public async Task<ActionResult<Departamento>> Post(DepartamentoDto departamentoDto)
         {
-            var cargo = this.mapper.Map<Cargo>(marcaDto);
-            this.unitofwork.Cargos.Add(cargo);
+            var departamento = this.mapper.Map<Departamento>(departamentoDto);
+            this.unitofwork.Departamentos.Add(departamento);
             await unitofwork.SaveAsync();
-            if(cargo == null)
+            if(departamento == null)
             {
                 return BadRequest();
             }
-            marcaDto.Id = cargo.Id;
-            return CreatedAtAction(nameof(Post), new {id = marcaDto.Id}, marcaDto);
+            departamentoDto.Id = departamento.Id;
+            return CreatedAtAction(nameof(Post), new {id = departamentoDto.Id}, departamentoDto);
         }
         
         [HttpPut("{id}")]
@@ -66,15 +66,15 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CargoDto>> Put(int id, [FromBody]CargoDto marcaDto){
-            if(marcaDto == null)
+        public async Task<ActionResult<DepartamentoDto>> Put(int id, [FromBody]DepartamentoDto departamentoDto){
+            if(departamentoDto == null)
             {
                 return NotFound();
             }
-            var cargo = this.mapper.Map<Cargo>(marcaDto);
-            unitofwork.Cargos.Update(cargo);
+            var departamento = this.mapper.Map<Departamento>(departamentoDto);
+            unitofwork.Departamentos.Update(departamento);
             await unitofwork.SaveAsync();
-            return marcaDto;
+            return departamentoDto;
         }
 
         [HttpDelete("{id}")]
@@ -82,12 +82,12 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<IActionResult> Delete(int id){
-            var cargo = await unitofwork.Cargos.GetByIdAsync(id);
-            if(cargo == null)
+            var departamento = await unitofwork.Departamentos.GetByIdAsync(id);
+            if(departamento == null)
             {
                 return NotFound();
             }
-            unitofwork.Cargos.Remove(cargo);
+            unitofwork.Departamentos.Remove(departamento);
             await unitofwork.SaveAsync();
             return NoContent();
         }

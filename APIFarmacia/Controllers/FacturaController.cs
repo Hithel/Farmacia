@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIFarmacia.Controllers;
 
-    public class CargoController : ApiBaseController
+    public class FacturaController : ApiBaseController
     {
         private readonly IUnitOfWork unitofwork;
         private readonly IMapper mapper;
     
-        public CargoController(IUnitOfWork unitOfWork, IMapper mapper)
+        public FacturaController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitofwork = unitOfWork;
             this.mapper = mapper;
@@ -24,10 +24,10 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<IEnumerable<CargoDto>>> Get()
+        public async Task<ActionResult<IEnumerable<FacturaDto>>> Get()
         {
-            var cargo = await unitofwork.Cargos.GetAllAsync();
-            return mapper.Map<List<CargoDto>>(cargo);
+            var factura = await unitofwork.Facturas.GetAllAsync();
+            return mapper.Map<List<FacturaDto>>(factura);
         }
 
         [HttpGet("{id}")]
@@ -35,30 +35,30 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CargoDto>> Get(int id)
+        public async Task<ActionResult<FacturaDto>> Get(int id)
         {
-            var cargo = await unitofwork.Cargos.GetByIdAsync(id);
-            if (cargo == null){
+            var factura = await unitofwork.Facturas.GetByIdAsync(id);
+            if (factura == null){
                 return NotFound();
             }
-            return this.mapper.Map<CargoDto>(cargo);
+            return this.mapper.Map<FacturaDto>(factura);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<Cargo>> Post(CargoDto marcaDto)
+        public async Task<ActionResult<Factura>> Post(FacturaDto facturaDto)
         {
-            var cargo = this.mapper.Map<Cargo>(marcaDto);
-            this.unitofwork.Cargos.Add(cargo);
+            var factura = this.mapper.Map<Factura>(facturaDto);
+            this.unitofwork.Facturas.Add(factura);
             await unitofwork.SaveAsync();
-            if(cargo == null)
+            if(factura == null)
             {
                 return BadRequest();
             }
-            marcaDto.Id = cargo.Id;
-            return CreatedAtAction(nameof(Post), new {id = marcaDto.Id}, marcaDto);
+            facturaDto.Id = factura.Id;
+            return CreatedAtAction(nameof(Post), new {id = facturaDto.Id}, facturaDto);
         }
         
         [HttpPut("{id}")]
@@ -66,15 +66,15 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CargoDto>> Put(int id, [FromBody]CargoDto marcaDto){
-            if(marcaDto == null)
+        public async Task<ActionResult<FacturaDto>> Put(int id, [FromBody]FacturaDto facturaDto){
+            if(facturaDto == null)
             {
                 return NotFound();
             }
-            var cargo = this.mapper.Map<Cargo>(marcaDto);
-            unitofwork.Cargos.Update(cargo);
+            var factura = this.mapper.Map<Factura>(facturaDto);
+            unitofwork.Facturas.Update(factura);
             await unitofwork.SaveAsync();
-            return marcaDto;
+            return facturaDto;
         }
 
         [HttpDelete("{id}")]
@@ -82,12 +82,12 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<IActionResult> Delete(int id){
-            var cargo = await unitofwork.Cargos.GetByIdAsync(id);
-            if(cargo == null)
+            var factura = await unitofwork.Facturas.GetByIdAsync(id);
+            if(factura == null)
             {
                 return NotFound();
             }
-            unitofwork.Cargos.Remove(cargo);
+            unitofwork.Facturas.Remove(factura);
             await unitofwork.SaveAsync();
             return NoContent();
         }

@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace APIFarmacia.Controllers;
 
-    public class CargoController : ApiBaseController
+    public class MarcaController : ApiBaseController
     {
         private readonly IUnitOfWork unitofwork;
         private readonly IMapper mapper;
     
-        public CargoController(IUnitOfWork unitOfWork, IMapper mapper)
+        public MarcaController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             this.unitofwork = unitOfWork;
             this.mapper = mapper;
@@ -24,10 +24,10 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<IEnumerable<CargoDto>>> Get()
+        public async Task<ActionResult<IEnumerable<MarcaDto>>> Get()
         {
-            var cargo = await unitofwork.Cargos.GetAllAsync();
-            return mapper.Map<List<CargoDto>>(cargo);
+            var marca = await unitofwork.Marcas.GetAllAsync();
+            return mapper.Map<List<MarcaDto>>(marca);
         }
 
         [HttpGet("{id}")]
@@ -35,29 +35,29 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CargoDto>> Get(int id)
+        public async Task<ActionResult<MarcaDto>> Get(int id)
         {
-            var cargo = await unitofwork.Cargos.GetByIdAsync(id);
-            if (cargo == null){
+            var marca = await unitofwork.Marcas.GetByIdAsync(id);
+            if (marca == null){
                 return NotFound();
             }
-            return this.mapper.Map<CargoDto>(cargo);
+            return this.mapper.Map<MarcaDto>(marca);
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
-        public async Task<ActionResult<Cargo>> Post(CargoDto marcaDto)
+        public async Task<ActionResult<Marca>> Post(MarcaDto marcaDto)
         {
-            var cargo = this.mapper.Map<Cargo>(marcaDto);
-            this.unitofwork.Cargos.Add(cargo);
+            var marca = this.mapper.Map<Marca>(marcaDto);
+            this.unitofwork.Marcas.Add(marca);
             await unitofwork.SaveAsync();
-            if(cargo == null)
+            if(marca == null)
             {
                 return BadRequest();
             }
-            marcaDto.Id = cargo.Id;
+            marcaDto.Id = marca.Id;
             return CreatedAtAction(nameof(Post), new {id = marcaDto.Id}, marcaDto);
         }
         
@@ -66,13 +66,13 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<CargoDto>> Put(int id, [FromBody]CargoDto marcaDto){
+        public async Task<ActionResult<MarcaDto>> Put(int id, [FromBody]MarcaDto marcaDto){
             if(marcaDto == null)
             {
                 return NotFound();
             }
-            var cargo = this.mapper.Map<Cargo>(marcaDto);
-            unitofwork.Cargos.Update(cargo);
+            var marca = this.mapper.Map<Marca>(marcaDto);
+            unitofwork.Marcas.Update(marca);
             await unitofwork.SaveAsync();
             return marcaDto;
         }
@@ -82,12 +82,12 @@ namespace APIFarmacia.Controllers;
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<IActionResult> Delete(int id){
-            var cargo = await unitofwork.Cargos.GetByIdAsync(id);
-            if(cargo == null)
+            var marca = await unitofwork.Marcas.GetByIdAsync(id);
+            if(marca == null)
             {
                 return NotFound();
             }
-            unitofwork.Cargos.Remove(cargo);
+            unitofwork.Marcas.Remove(marca);
             await unitofwork.SaveAsync();
             return NoContent();
         }
