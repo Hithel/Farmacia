@@ -11,84 +11,87 @@ namespace APIFarmacia.Controllers;
 
     public class MedicamentoController : ApiBaseController
     {
-        private readonly IUnitOfWork unitofwork;
-        private readonly IMapper mapper;
+    private readonly IUnitOfWork unitofwork;
+    private readonly IMapper mapper;
 
-        public MedicamentoController(IUnitOfWork unitofwork, IMapper mapper)
+    public MedicamentoController(IUnitOfWork unitofwork, IMapper mapper)
+    {
+        this.unitofwork = unitofwork;
+        this.mapper = mapper;
+    }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+    public async Task<ActionResult<IEnumerable<MedicamentoDto>>> Get()
+    {
+        var medicamento = await unitofwork.Medicamentos.GetAllAsync();
+        return mapper.Map<List<MedicamentoDto>>(medicamento);
+    }
+
+    [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+    public async Task<ActionResult<MedicamentoDto>> Get(int id)
+    {
+        var medicamento = await unitofwork.Medicamentos.GetByIdAsync(id);
+        if (medicamento == null)
         {
-            this.unitofwork = unitofwork;
-            this.mapper = mapper;
+            return NotFound();
         }
-        [HttpGet]
-        [MapToApiVersion("1.0")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        return this.mapper.Map<MedicamentoDto>(medicamento);
+    }
 
-        public async Task<ActionResult<IEnumerable<MedicamentoDto>>> Get()
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+    public async Task<ActionResult<Medicamento>> Post(MedicamentoDto medicamentoDto)
+    {
+        var medicamento = this.mapper.Map<Medicamento>(medicamentoDto);
+        this.unitofwork.Medicamentos.Add(medicamento);
+        await unitofwork.SaveAsync();
+        if (medicamento == null)
         {
-            var Medicamento = await unitofwork.Medicamentos.GetAllAsync();
-            return mapper.Map<List<MedicamentoDto>>(Medicamento);
+            return BadRequest();
         }
+        medicamentoDto.Id = medicamento.Id;
+        return CreatedAtAction(nameof(Post), new { id = medicamentoDto.Id }, medicamentoDto);
+    }
 
-        [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<MedicamentoDto>> Get(int id)
+    public async Task<ActionResult<MedicamentoDto>> Put(int id, [FromBody] MedicamentoDto medicamentoDto)
+    {
+        if (medicamentoDto == null)
         {
-            var Medicamento = await unitofwork.Medicamentos.GetByIdAsync(id);
-            if (Medicamento == null){
-                return NotFound();
-            }
-            return this.mapper.Map<MedicamentoDto>(Medicamento);
+            return NotFound();
         }
+        var medicamento = this.mapper.Map<Medicamento>(medicamentoDto);
+        unitofwork.Medicamentos.Update(medicamento);
+        await unitofwork.SaveAsync();
+        return medicamentoDto;
+    }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<Medicamento>> Post(MedicamentoDto MedicamentoDto)
+    public async Task<IActionResult> Delete(int id)
+    {
+        var medicamento = await unitofwork.Medicamentos.GetByIdAsync(id);
+        if (medicamento == null)
         {
-            var Medicamento = this.mapper.Map<Medicamento>(MedicamentoDto);
-            this.unitofwork.Medicamentos.Add(Medicamento);
-            await unitofwork.SaveAsync();
-            if(Medicamento == null)
-            {
-                return BadRequest();
-            }
-            MedicamentoDto.Id = Medicamento.Id;
-            return CreatedAtAction(nameof(Post), new {id = Medicamento.Id}, Medicamento);
+            return NotFound();
         }
-
-        [HttpPut("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<ActionResult<MedicamentoDto>> Put(int id, [FromBody]MedicamentoDto MedicamentoDto){
-            if(MedicamentoDto == null)
-            {
-                return NotFound();
-            }
-            var Medicamentos = this.mapper.Map<Medicamento>(MedicamentoDto);
-            unitofwork.Medicamentos.Update(Medicamentos);
-            await unitofwork.SaveAsync();
-            return MedicamentoDto;
-        }
-
-        [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<IActionResult> Delete(int id){
-            var Medicamentos = await unitofwork.Medicamentos.GetByIdAsync(id);
-            if(Medicamentos == null)
-            {
-                return NotFound();
-            }
-            unitofwork.Medicamentos.Remove(Medicamentos);
-            await unitofwork.SaveAsync();
-            return NoContent();
-        }
+        unitofwork.Medicamentos.Remove(medicamento);
+        await unitofwork.SaveAsync();
+        return NoContent();
+    }
     }

@@ -9,84 +9,87 @@ using Microsoft.AspNetCore.Mvc;
 namespace APIFarmacia.Controllers;
     public class RecetaController : ApiBaseController
     {
-        private readonly IUnitOfWork unitofwork;
-        private readonly IMapper mapper;
+    private readonly IUnitOfWork unitofwork;
+    private readonly IMapper mapper;
 
-        public RecetaController(IUnitOfWork unitofwork, IMapper mapper)
+    public RecetaController(IUnitOfWork unitofwork, IMapper mapper)
+    {
+        this.unitofwork = unitofwork;
+        this.mapper = mapper;
+    }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+    public async Task<ActionResult<IEnumerable<RecetaDto>>> Get()
+    {
+        var receta = await unitofwork.Recetas.GetAllAsync();
+        return mapper.Map<List<RecetaDto>>(receta);
+    }
+
+    [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+    public async Task<ActionResult<RecetaDto>> Get(int id)
+    {
+        var receta = await unitofwork.Recetas.GetByIdAsync(id);
+        if (receta == null)
         {
-            this.unitofwork = unitofwork;
-            this.mapper = mapper;
+            return NotFound();
         }
-        [HttpGet]
-        [MapToApiVersion("1.0")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        return this.mapper.Map<RecetaDto>(receta);
+    }
 
-        public async Task<ActionResult<IEnumerable<RecetaDto>>> Get()
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+    public async Task<ActionResult<Receta>> Post(RecetaDto recetaDto)
+    {
+        var receta = this.mapper.Map<Receta>(recetaDto);
+        this.unitofwork.Recetas.Add(receta);
+        await unitofwork.SaveAsync();
+        if (receta == null)
         {
-            var Recetas = await unitofwork.Recetas.GetAllAsync();
-            return mapper.Map<List<RecetaDto>>(Recetas);
+            return BadRequest();
         }
+        recetaDto.Id = receta.Id;
+        return CreatedAtAction(nameof(Post), new { id = recetaDto.Id }, recetaDto);
+    }
 
-        [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<RecetaDto>> Get(int id)
+    public async Task<ActionResult<RecetaDto>> Put(int id, [FromBody] RecetaDto recetaDto)
+    {
+        if (recetaDto == null)
         {
-            var Recetas = await unitofwork.Recetas.GetByIdAsync(id);
-            if (Recetas == null){
-                return NotFound();
-            }
-            return this.mapper.Map<RecetaDto>(Recetas);
+            return NotFound();
         }
+        var receta = this.mapper.Map<Receta>(recetaDto);
+        unitofwork.Recetas.Update(receta);
+        await unitofwork.SaveAsync();
+        return recetaDto;
+    }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<Receta>> Post(RecetaDto RecetaDto)
+    public async Task<IActionResult> Delete(int id)
+    {
+        var receta = await unitofwork.Recetas.GetByIdAsync(id);
+        if (receta == null)
         {
-            var Recetas = this.mapper.Map<Receta>(RecetaDto);
-            this.unitofwork.Recetas.Add(Recetas);
-            await unitofwork.SaveAsync();
-            if(Recetas == null)
-            {
-                return BadRequest();
-            }
-            Recetas.Id = Recetas.Id;
-            return CreatedAtAction(nameof(Post), new {id = Recetas.Id}, Recetas);
+            return NotFound();
         }
-        
-        [HttpPut("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<ActionResult<RecetaDto>> Put(int id, [FromBody]RecetaDto RecetaDto){
-            if(RecetaDto == null)
-            {
-                return NotFound();
-            }
-            var Recetas = this.mapper.Map<Receta>(RecetaDto);
-            unitofwork.Recetas.Update(Recetas);
-            await unitofwork.SaveAsync();
-            return RecetaDto;
-        }
-
-        [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<IActionResult> Delete(int id){
-            var Recetas = await unitofwork.Recetas.GetByIdAsync(id);
-            if(Recetas == null)
-            {
-                return NotFound();
-            }
-            unitofwork.Recetas.Remove(Recetas);
-            await unitofwork.SaveAsync();
-            return NoContent();
-        }
+        unitofwork.Recetas.Remove(receta);
+        await unitofwork.SaveAsync();
+        return NoContent();
+    }
     }

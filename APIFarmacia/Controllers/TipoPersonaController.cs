@@ -10,83 +10,86 @@ namespace APIFarmacia.Controllers;
     public class TipoPersonaController : ApiBaseController
     {
         private readonly IUnitOfWork unitofwork;
-        private readonly IMapper mapper;
+    private readonly IMapper mapper;
 
-        public TipoPersonaController(IUnitOfWork unitofwork, IMapper mapper)
+    public TipoPersonaController(IUnitOfWork unitofwork, IMapper mapper)
+    {
+        this.unitofwork = unitofwork;
+        this.mapper = mapper;
+    }
+
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+    public async Task<ActionResult<IEnumerable<TipoPersonaDto>>> Get()
+    {
+        var tipoPersona = await unitofwork.TipoPersonas.GetAllAsync();
+        return mapper.Map<List<TipoPersonaDto>>(tipoPersona);
+    }
+
+    [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+    public async Task<ActionResult<TipoPersonaDto>> Get(int id)
+    {
+        var tipoPersona = await unitofwork.TipoPersonas.GetByIdAsync(id);
+        if (tipoPersona == null)
         {
-            this.unitofwork = unitofwork;
-            this.mapper = mapper;
+            return NotFound();
         }
-        [HttpGet]
-        [MapToApiVersion("1.0")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        return this.mapper.Map<TipoPersonaDto>(tipoPersona);
+    }
 
-        public async Task<ActionResult<IEnumerable<TipoPersonaDto>>> Get()
+    [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+    public async Task<ActionResult<TipoPersona>> Post(TipoPersonaDto tipoPersonaDto)
+    {
+        var tipoPersona = this.mapper.Map<TipoPersona>(tipoPersonaDto);
+        this.unitofwork.TipoPersonas.Add(tipoPersona);
+        await unitofwork.SaveAsync();
+        if (tipoPersona == null)
         {
-            var TipoPersonas = await unitofwork.TipoPersonas.GetAllAsync();
-            return mapper.Map<List<TipoPersonaDto>>(TipoPersonas);
+            return BadRequest();
         }
+        tipoPersonaDto.Id = tipoPersona.Id;
+        return CreatedAtAction(nameof(Post), new { id = tipoPersonaDto.Id }, tipoPersonaDto);
+    }
 
-        [HttpGet("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [HttpPut("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<TipoPersonaDto>> Get(int id)
+    public async Task<ActionResult<TipoPersonaDto>> Put(int id, [FromBody] TipoPersonaDto tipoPersonaDto)
+    {
+        if (tipoPersonaDto == null)
         {
-            var TipoPersonas = await unitofwork.TipoPersonas.GetByIdAsync(id);
-            if (TipoPersonas == null){
-                return NotFound();
-            }
-            return this.mapper.Map<TipoPersonaDto>(TipoPersonas);
+            return NotFound();
         }
+        var tipoPersona = this.mapper.Map<TipoPersona>(tipoPersonaDto);
+        unitofwork.TipoPersonas.Update(tipoPersona);
+        await unitofwork.SaveAsync();
+        return tipoPersonaDto;
+    }
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
 
-        public async Task<ActionResult<TipoPersona>> Post(TipoPersonaDto TipoPersonaDto)
+    public async Task<IActionResult> Delete(int id)
+    {
+        var tipoPersona = await unitofwork.TipoPersonas.GetByIdAsync(id);
+        if (tipoPersona == null)
         {
-            var TipoPersonas = this.mapper.Map<TipoPersona>(TipoPersonaDto);
-            this.unitofwork.TipoPersonas.Add(TipoPersonas);
-            await unitofwork.SaveAsync();
-            if(TipoPersonas == null)
-            {
-                return BadRequest();
-            }
-            TipoPersonas.Id = TipoPersonas.Id;
-            return CreatedAtAction(nameof(Post), new {id = TipoPersonas.Id}, TipoPersonas);
+            return NotFound();
         }
-
-        [HttpPut("{id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<ActionResult<TipoPersonaDto>> Put(int id, [FromBody]TipoPersonaDto TipoPersonaDto){
-            if(TipoPersonaDto == null)
-            {
-                return NotFound();
-            }
-            var TipoPersonas = this.mapper.Map<TipoPersona>(TipoPersonaDto);
-            unitofwork.TipoPersonas.Update(TipoPersonas);
-            await unitofwork.SaveAsync();
-            return TipoPersonaDto;
-        }
-
-        [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-
-        public async Task<IActionResult> Delete(int id){
-            var TipoPersonas = await unitofwork.TipoPersonas.GetByIdAsync(id);
-            if(TipoPersonas == null)
-            {
-                return NotFound();
-            }
-            unitofwork.TipoPersonas.Remove(TipoPersonas);
-            await unitofwork.SaveAsync();
-            return NoContent();
-        }
+        unitofwork.TipoPersonas.Remove(tipoPersona);
+        await unitofwork.SaveAsync();
+        return NoContent();
+    }
     }
