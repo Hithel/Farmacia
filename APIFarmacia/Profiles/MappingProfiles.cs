@@ -8,6 +8,14 @@ namespace API.Profiles;
     {
         public MappingProfiles()
         {
+            CreateMap<Cargo, CargoDto>().ReverseMap();
+            CreateMap<Categoria, CategoriaDto>().ReverseMap();
+            CreateMap<Ciudad, CiudadDto>().ReverseMap();
+            CreateMap<CompraProveedor, CompraProveedorDto>().ReverseMap();
+            CreateMap<Departamento, DepartamentoDto>().ReverseMap();
+            CreateMap<Estado, EstadoDto>().ReverseMap();
+            CreateMap<Factura, FacturaDto>().ReverseMap();
+            CreateMap<Marca, MarcaDto>().ReverseMap();
             CreateMap<ProveedorDireccion, ProveedorDireccionDto>().ReverseMap();
             CreateMap<Proveedor, ProveedorDto>().ReverseMap();
             CreateMap<Receta, RecetaDto>().ReverseMap();
@@ -22,11 +30,14 @@ namespace API.Profiles;
             CreateMap<Persona, PersonaDto>().ReverseMap();
             CreateMap<Rol, RolDto>().ReverseMap();
             
+<<<<<<< HEAD
 
 
 
 
 
+=======
+>>>>>>> d68797e4d9c38bc48857ced52bb4b80d05490e20
             // CreateMap<Departamento, DepartamentoDto>().ReverseMap();
 
             // CreateMap<Pais,PaisxDepaDto>().ReverseMap();
