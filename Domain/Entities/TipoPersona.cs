@@ -7,7 +7,7 @@ namespace Domain.Entities;
 
     public class TipoPersona : BaseEntity
     {
-        public int Descripcion {get; set;}
+        public string Descripcion {get; set;}
 
         /*llaves*/
         public ICollection<Persona> Personas {get; set;}
