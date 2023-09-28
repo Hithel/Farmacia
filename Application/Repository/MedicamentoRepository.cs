@@ -13,11 +13,12 @@ namespace Application.Repository;
             _context = context;
         }
     
-        // public override async Task<IEnumerable<Medicamento>> GetAllAsync()
-        //     {
-        //         return await _context.Medicamentos
-        //         .ToListAsync();
-        //     }
+        public  async Task<IEnumerable<Medicamento>> GetStockLess50Async(int cantidad)
+            {
+                return await _context.Medicamentos
+                .Where(m => m.Stock < cantidad)
+                .ToListAsync();
+            }
     
         //     public override async Task<Medicamento> GetByIdAsync(int id)
         //     {

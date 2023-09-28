@@ -45,6 +45,20 @@ namespace APIFarmacia.Controllers;
         return this.mapper.Map<MedicamentoDto>(medicamento);
     }
 
+    [HttpGet("GetStockLess50Async/{cantidad}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+
+    public async Task<ActionResult<MedicamentoDto>> GetStockLess50Async(int cantidad)
+    {
+        var medicamento = await unitofwork.Medicamentos.GetStockLess50Async(cantidad);
+        if (medicamento == null)
+        {
+            return NotFound("No se encontraron Medicamentos con stock menor a 50 unidades.");
+        }
+        return this.mapper.Map<MedicamentoDto>(medicamento);
+    }
+
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
