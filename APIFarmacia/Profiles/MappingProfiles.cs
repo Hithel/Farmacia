@@ -21,6 +21,8 @@ namespace API.Profiles;
             CreateMap<PersonaContacto, PersonaContactoDto>().ReverseMap();
             CreateMap<Persona, PersonaDto>().ReverseMap();
             CreateMap<Rol, RolDto>().ReverseMap();
+            
+
 
 
 
