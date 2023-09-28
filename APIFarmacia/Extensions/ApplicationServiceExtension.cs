@@ -43,7 +43,7 @@ namespace APIFarmacia.Extensions;
                 {
                     Endpoint = "*",
                     Period = "10s",
-                    Limit = 2
+                    Limit = 5
                 }
             };
         });

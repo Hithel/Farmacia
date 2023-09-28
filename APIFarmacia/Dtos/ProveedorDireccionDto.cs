@@ -8,6 +8,5 @@ namespace APIFarmacia.Dtos;
         public string Descripcion {get; set;}
 
         /*llaves*/
-        public Ciudad Ciudad {get; set;}
-        public Proveedor Proveedor {get; set;}
+
     }
