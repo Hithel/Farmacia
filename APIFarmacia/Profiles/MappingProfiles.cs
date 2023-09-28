@@ -29,17 +29,5 @@ namespace API.Profiles;
             CreateMap<PersonaContacto, PersonaContactoDto>().ReverseMap();
             CreateMap<Persona, PersonaDto>().ReverseMap();
             CreateMap<Rol, RolDto>().ReverseMap();
-            
-<<<<<<< HEAD
-
-
-
-
-
-=======
->>>>>>> d68797e4d9c38bc48857ced52bb4b80d05490e20
-            // CreateMap<Departamento, DepartamentoDto>().ReverseMap();
-
-            // CreateMap<Pais,PaisxDepaDto>().ReverseMap();
         }
     }
