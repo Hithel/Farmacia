@@ -9,7 +9,7 @@ namespace Persistence.Data.Configuration;
         {
             public void Configure(EntityTypeBuilder<PersonaContacto> builder)
             {
-                builder.ToTable("PersonaContacto");
+                builder.ToTable("personasContactos");
 
     
                 builder.Property(p=> p.Contacto)

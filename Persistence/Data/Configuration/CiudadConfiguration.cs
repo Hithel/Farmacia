@@ -7,7 +7,7 @@ namespace Persistence.Data.Configuration;
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Ciudad> builder)
         {
-            builder.ToTable("ciudad");
+            builder.ToTable("ciudades");
             builder.Property(p=> p.Nombre)
             .HasColumnName("nombre")
             .HasMaxLength(50)

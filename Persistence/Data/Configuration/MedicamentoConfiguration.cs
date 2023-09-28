@@ -9,7 +9,7 @@ namespace Persistence.Data.Configuration;
     {
         public void Configure(EntityTypeBuilder<Medicamento> builder)
         {
-            builder.ToTable("medicamento");
+            builder.ToTable("medicamentos");
 
             builder.Property(p=> p.Nombre)
             .HasColumnName("nombre")
@@ -64,7 +64,7 @@ namespace Persistence.Data.Configuration;
                     
                     j =>
                     {
-                        j.ToTable("MedicamentoVendido");
+                        j.ToTable("medicamentosVendidos");
                         j.HasKey(t => new { t.IdMedicamentoFk, t.IdFacturaFK });
 
                     });
@@ -86,7 +86,7 @@ namespace Persistence.Data.Configuration;
                     
                     j =>
                     {
-                        j.ToTable("MedicamentoVendido");
+                        j.ToTable("medicamentosVendidos");
                         j.HasKey(t => new { t.IdMedicamentoFk, t.IdRecetaFk });
 
                     });

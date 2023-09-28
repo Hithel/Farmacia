@@ -7,7 +7,7 @@ namespace Persistence.Data.Configuration;
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Marca> builder)
         {
-            builder.ToTable("marca");
+            builder.ToTable("marcas");
             
             builder.Property(p=> p.Nombre)
             .HasColumnName("nombre")

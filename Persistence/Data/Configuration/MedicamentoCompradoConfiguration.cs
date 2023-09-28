@@ -9,7 +9,7 @@ namespace Persistence.Data.Configuration;
         {
             public void Configure(EntityTypeBuilder<MedicamentoComprado> builder)
             {
-                builder.ToTable("MedicamentoComprado");
+                builder.ToTable("medicamentosComprados");
 
             builder.Property(p=> p.PrecioCompra)
             .HasColumnName("PrecioCompra")

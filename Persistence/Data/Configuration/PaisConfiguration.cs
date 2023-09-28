@@ -9,7 +9,7 @@ public class PaisConfiguration : IEntityTypeConfiguration<Pais>
 {
     public void Configure(EntityTypeBuilder<Pais> builder)
     {
-        builder.ToTable("pais");
+        builder.ToTable("paises");
         builder.Property(p =>p.Nombre)
         .HasColumnName("nombre")
         .HasMaxLength(120)

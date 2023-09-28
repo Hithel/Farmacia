@@ -9,7 +9,7 @@ namespace Persistence.Data.Configuration;
         {
             public void Configure(EntityTypeBuilder<TipoDocumento> builder)
             {
-                builder.ToTable("TipoDocumento");
+                builder.ToTable("tiposDocumentos");
 
             builder.Property(p=> p.Descripcion)
             .HasColumnName("Descripcion")

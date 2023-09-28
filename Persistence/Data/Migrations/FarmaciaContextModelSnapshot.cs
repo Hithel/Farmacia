@@ -33,7 +33,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("cargo", (string)null);
+                    b.ToTable("cargos", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Categoria", b =>
@@ -50,7 +50,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("categoria", (string)null);
+                    b.ToTable("categorias", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Ciudad", b =>
@@ -72,7 +72,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("IdDepartamentoFk");
 
-                    b.ToTable("ciudad", (string)null);
+                    b.ToTable("ciudades", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.CompraProveedor", b =>
@@ -97,7 +97,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("IdProveedorFk");
 
-                    b.ToTable("compraproveedor", (string)null);
+                    b.ToTable("comprasProveedores", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Departamento", b =>
@@ -119,7 +119,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("IdPaisFk");
 
-                    b.ToTable("Departamento", (string)null);
+                    b.ToTable("departamentos", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Estado", b =>
@@ -136,7 +136,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Estado", (string)null);
+                    b.ToTable("estados", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Factura", b =>
@@ -168,7 +168,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("PersonaDoctorId");
 
-                    b.ToTable("Factura", (string)null);
+                    b.ToTable("facturas", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Marca", b =>
@@ -185,7 +185,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("marca", (string)null);
+                    b.ToTable("marcas", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Medicamento", b =>
@@ -241,7 +241,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("MedicamentoCompradoId");
 
-                    b.ToTable("medicamento", (string)null);
+                    b.ToTable("medicamentos", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.MedicamentoComprado", b =>
@@ -271,7 +271,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("IdMedicamentoFk");
 
-                    b.ToTable("MedicamentoComprado", (string)null);
+                    b.ToTable("medicamentosComprados", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.MedicamentoVendido", b =>
@@ -294,7 +294,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("IdRecetaFk");
 
-                    b.ToTable("MedicamentoVendido", (string)null);
+                    b.ToTable("medicamentosVendidos", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Pais", b =>
@@ -311,7 +311,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("pais", (string)null);
+                    b.ToTable("paises", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Persona", b =>
@@ -347,7 +347,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("IdTipoPersonaFk");
 
-                    b.ToTable("Persona", (string)null);
+                    b.ToTable("personas", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.PersonaContacto", b =>
@@ -374,7 +374,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("IdTipoContactoFk");
 
-                    b.ToTable("PersonaContacto", (string)null);
+                    b.ToTable("personasContactos", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.PersonaDireccion", b =>
@@ -401,7 +401,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("IdPersonaFk");
 
-                    b.ToTable("PersonaDireccion", (string)null);
+                    b.ToTable("personasDirecciones", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Proveedor", b =>
@@ -418,7 +418,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Proveedor", (string)null);
+                    b.ToTable("proveedores", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.ProveedorContacto", b =>
@@ -445,7 +445,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("IdTipoContactoFk");
 
-                    b.ToTable("ProveedorContacto", (string)null);
+                    b.ToTable("proveedoresContactos", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.ProveedorDireccion", b =>
@@ -472,7 +472,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("IdProveedorFk");
 
-                    b.ToTable("ProveedorDireccion", (string)null);
+                    b.ToTable("proveedoresDirecciones", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Receta", b =>
@@ -507,7 +507,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("IdPacienteFK");
 
-                    b.ToTable("Receta", (string)null);
+                    b.ToTable("recetas", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Rol", b =>
@@ -520,11 +520,11 @@ namespace Persistence.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)")
-                        .HasColumnName("Descripcion");
+                        .HasColumnName("descripcion");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rol", (string)null);
+                    b.ToTable("roles", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.TipoContacto", b =>
@@ -541,7 +541,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoContacto", (string)null);
+                    b.ToTable("tiposContactos", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.TipoDocumento", b =>
@@ -558,7 +558,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoDocumento", (string)null);
+                    b.ToTable("tiposDocumentos", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.TipoPersona", b =>
@@ -575,7 +575,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoPersona", (string)null);
+                    b.ToTable("tiposPersonas", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -609,7 +609,7 @@ namespace Persistence.Data.Migrations
 
                     b.HasIndex("IdRol");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("users", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Ciudad", b =>

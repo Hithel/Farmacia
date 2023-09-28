@@ -7,7 +7,7 @@ namespace Persistence.Data.Configuration;
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Factura> builder)
         {
-            builder.ToTable("Factura");
+            builder.ToTable("facturas");
             builder.Property(p=> p.Fecha)
             .HasColumnName("fecha")
             .HasColumnType("datetime")

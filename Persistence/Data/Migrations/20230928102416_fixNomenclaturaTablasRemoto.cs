@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class fixNomenclaturaTablasRemoto : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,7 +16,7 @@ namespace Persistence.Data.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "cargo",
+                name: "cargos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -26,12 +26,12 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_cargo", x => x.Id);
+                    table.PrimaryKey("PK_cargos", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "categoria",
+                name: "categorias",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -41,12 +41,12 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_categoria", x => x.Id);
+                    table.PrimaryKey("PK_categorias", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Estado",
+                name: "estados",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -56,12 +56,12 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Estado", x => x.Id);
+                    table.PrimaryKey("PK_estados", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "marca",
+                name: "marcas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -71,12 +71,12 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_marca", x => x.Id);
+                    table.PrimaryKey("PK_marcas", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "pais",
+                name: "paises",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -86,12 +86,12 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_pais", x => x.Id);
+                    table.PrimaryKey("PK_paises", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Proveedor",
+                name: "proveedores",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -101,12 +101,27 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Proveedor", x => x.Id);
+                    table.PrimaryKey("PK_proveedores", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Rol",
+                name: "roles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    descripcion = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_roles", x => x.Id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "tiposContactos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -116,12 +131,12 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rol", x => x.Id);
+                    table.PrimaryKey("PK_tiposContactos", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "TipoContacto",
+                name: "tiposDocumentos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -131,12 +146,12 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoContacto", x => x.Id);
+                    table.PrimaryKey("PK_tiposDocumentos", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "TipoDocumento",
+                name: "tiposPersonas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -146,26 +161,12 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoDocumento", x => x.Id);
+                    table.PrimaryKey("PK_tiposPersonas", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "TipoPersona",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Descripcion = table.Column<int>(type: "int", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TipoPersona", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Departamento",
+                name: "departamentos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -176,18 +177,18 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Departamento", x => x.Id);
+                    table.PrimaryKey("PK_departamentos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Departamento_pais_IdPaisFk",
+                        name: "FK_departamentos_paises_IdPaisFk",
                         column: x => x.IdPaisFk,
-                        principalTable: "pais",
+                        principalTable: "paises",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ProveedorContacto",
+                name: "proveedoresContactos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -199,24 +200,24 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProveedorContacto", x => x.Id);
+                    table.PrimaryKey("PK_proveedoresContactos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProveedorContacto_Proveedor_IdProveedorFk",
+                        name: "FK_proveedoresContactos_proveedores_IdProveedorFk",
                         column: x => x.IdProveedorFk,
-                        principalTable: "Proveedor",
+                        principalTable: "proveedores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProveedorContacto_TipoContacto_IdTipoContactoFk",
+                        name: "FK_proveedoresContactos_tiposContactos_IdTipoContactoFk",
                         column: x => x.IdTipoContactoFk,
-                        principalTable: "TipoContacto",
+                        principalTable: "tiposContactos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Persona",
+                name: "personas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -230,30 +231,30 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Persona", x => x.Id);
+                    table.PrimaryKey("PK_personas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Persona_TipoDocumento_IdTipoDocumentoFk",
-                        column: x => x.IdTipoDocumentoFk,
-                        principalTable: "TipoDocumento",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Persona_TipoPersona_IdTipoPersonaFk",
-                        column: x => x.IdTipoPersonaFk,
-                        principalTable: "TipoPersona",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Persona_cargo_IdCargoFk",
+                        name: "FK_personas_cargos_IdCargoFk",
                         column: x => x.IdCargoFk,
-                        principalTable: "cargo",
+                        principalTable: "cargos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_personas_tiposDocumentos_IdTipoDocumentoFk",
+                        column: x => x.IdTipoDocumentoFk,
+                        principalTable: "tiposDocumentos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_personas_tiposPersonas_IdTipoPersonaFk",
+                        column: x => x.IdTipoPersonaFk,
+                        principalTable: "tiposPersonas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ciudad",
+                name: "ciudades",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -264,18 +265,18 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ciudad", x => x.Id);
+                    table.PrimaryKey("PK_ciudades", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ciudad_Departamento_IdDepartamentoFk",
+                        name: "FK_ciudades_departamentos_IdDepartamentoFk",
                         column: x => x.IdDepartamentoFk,
-                        principalTable: "Departamento",
+                        principalTable: "departamentos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "compraproveedor",
+                name: "comprasProveedores",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -286,24 +287,24 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_compraproveedor", x => x.Id);
+                    table.PrimaryKey("PK_comprasProveedores", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_compraproveedor_Persona_IdPersonaFk",
+                        name: "FK_comprasProveedores_personas_IdPersonaFk",
                         column: x => x.IdPersonaFk,
-                        principalTable: "Persona",
+                        principalTable: "personas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_compraproveedor_Proveedor_IdProveedorFk",
+                        name: "FK_comprasProveedores_proveedores_IdProveedorFk",
                         column: x => x.IdProveedorFk,
-                        principalTable: "Proveedor",
+                        principalTable: "proveedores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Factura",
+                name: "facturas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -316,23 +317,23 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Factura", x => x.Id);
+                    table.PrimaryKey("PK_facturas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Factura_Persona_IdDoctorFk",
+                        name: "FK_facturas_personas_IdDoctorFk",
                         column: x => x.IdDoctorFk,
-                        principalTable: "Persona",
+                        principalTable: "personas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Factura_Persona_PersonaDoctorId",
+                        name: "FK_facturas_personas_PersonaDoctorId",
                         column: x => x.PersonaDoctorId,
-                        principalTable: "Persona",
+                        principalTable: "personas",
                         principalColumn: "Id");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "PersonaContacto",
+                name: "personasContactos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -344,24 +345,24 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PersonaContacto", x => x.Id);
+                    table.PrimaryKey("PK_personasContactos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PersonaContacto_Persona_IdPersonaFk",
+                        name: "FK_personasContactos_personas_IdPersonaFk",
                         column: x => x.IdPersonaFk,
-                        principalTable: "Persona",
+                        principalTable: "personas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PersonaContacto_TipoContacto_IdTipoContactoFk",
+                        name: "FK_personasContactos_tiposContactos_IdTipoContactoFk",
                         column: x => x.IdTipoContactoFk,
-                        principalTable: "TipoContacto",
+                        principalTable: "tiposContactos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Receta",
+                name: "recetas",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -375,24 +376,24 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Receta", x => x.Id);
+                    table.PrimaryKey("PK_recetas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Receta_Persona_IdDoctorFK",
+                        name: "FK_recetas_personas_IdDoctorFK",
                         column: x => x.IdDoctorFK,
-                        principalTable: "Persona",
+                        principalTable: "personas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Receta_Persona_IdPacienteFK",
+                        name: "FK_recetas_personas_IdPacienteFK",
                         column: x => x.IdPacienteFK,
-                        principalTable: "Persona",
+                        principalTable: "personas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "User",
+                name: "users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -406,24 +407,24 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_User_Persona_IdPersonaFk",
+                        name: "FK_users_personas_IdPersonaFk",
                         column: x => x.IdPersonaFk,
-                        principalTable: "Persona",
+                        principalTable: "personas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_User_Rol_IdRol",
+                        name: "FK_users_roles_IdRol",
                         column: x => x.IdRol,
-                        principalTable: "Rol",
+                        principalTable: "roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "PersonaDireccion",
+                name: "personasDirecciones",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -435,24 +436,24 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PersonaDireccion", x => x.Id);
+                    table.PrimaryKey("PK_personasDirecciones", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PersonaDireccion_Persona_IdPersonaFk",
-                        column: x => x.IdPersonaFk,
-                        principalTable: "Persona",
+                        name: "FK_personasDirecciones_ciudades_IdCiudadFk",
+                        column: x => x.IdCiudadFk,
+                        principalTable: "ciudades",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PersonaDireccion_ciudad_IdCiudadFk",
-                        column: x => x.IdCiudadFk,
-                        principalTable: "ciudad",
+                        name: "FK_personasDirecciones_personas_IdPersonaFk",
+                        column: x => x.IdPersonaFk,
+                        principalTable: "personas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ProveedorDireccion",
+                name: "proveedoresDirecciones",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -464,24 +465,24 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProveedorDireccion", x => x.Id);
+                    table.PrimaryKey("PK_proveedoresDirecciones", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProveedorDireccion_Proveedor_IdProveedorFk",
-                        column: x => x.IdProveedorFk,
-                        principalTable: "Proveedor",
+                        name: "FK_proveedoresDirecciones_ciudades_IdCiudadFk",
+                        column: x => x.IdCiudadFk,
+                        principalTable: "ciudades",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProveedorDireccion_ciudad_IdCiudadFk",
-                        column: x => x.IdCiudadFk,
-                        principalTable: "ciudad",
+                        name: "FK_proveedoresDirecciones_proveedores_IdProveedorFk",
+                        column: x => x.IdProveedorFk,
+                        principalTable: "proveedores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "medicamento",
+                name: "medicamentos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -501,30 +502,30 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_medicamento", x => x.Id);
+                    table.PrimaryKey("PK_medicamentos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_medicamento_Estado_IdEstadoFK",
-                        column: x => x.IdEstadoFK,
-                        principalTable: "Estado",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_medicamento_categoria_IdCategoriaFK",
+                        name: "FK_medicamentos_categorias_IdCategoriaFK",
                         column: x => x.IdCategoriaFK,
-                        principalTable: "categoria",
+                        principalTable: "categorias",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_medicamento_marca_IdMarcaFk",
+                        name: "FK_medicamentos_estados_IdEstadoFK",
+                        column: x => x.IdEstadoFK,
+                        principalTable: "estados",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_medicamentos_marcas_IdMarcaFk",
                         column: x => x.IdMarcaFk,
-                        principalTable: "marca",
+                        principalTable: "marcas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "MedicamentoComprado",
+                name: "medicamentosComprados",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -536,24 +537,24 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicamentoComprado", x => x.Id);
+                    table.PrimaryKey("PK_medicamentosComprados", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MedicamentoComprado_compraproveedor_IdCompraProveedorFk",
+                        name: "FK_medicamentosComprados_comprasProveedores_IdCompraProveedorFk",
                         column: x => x.IdCompraProveedorFk,
-                        principalTable: "compraproveedor",
+                        principalTable: "comprasProveedores",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MedicamentoComprado_medicamento_IdMedicamentoFk",
+                        name: "FK_medicamentosComprados_medicamentos_IdMedicamentoFk",
                         column: x => x.IdMedicamentoFk,
-                        principalTable: "medicamento",
+                        principalTable: "medicamentos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "MedicamentoVendido",
+                name: "medicamentosVendidos",
                 columns: table => new
                 {
                     IdMedicamentoFk = table.Column<int>(type: "int", nullable: false),
@@ -563,179 +564,179 @@ namespace Persistence.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicamentoVendido", x => new { x.IdMedicamentoFk, x.IdRecetaFk });
+                    table.PrimaryKey("PK_medicamentosVendidos", x => new { x.IdMedicamentoFk, x.IdRecetaFk });
                     table.ForeignKey(
-                        name: "FK_MedicamentoVendido_Factura_IdFacturaFK",
+                        name: "FK_medicamentosVendidos_facturas_IdFacturaFK",
                         column: x => x.IdFacturaFK,
-                        principalTable: "Factura",
+                        principalTable: "facturas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MedicamentoVendido_Receta_IdRecetaFk",
-                        column: x => x.IdRecetaFk,
-                        principalTable: "Receta",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_MedicamentoVendido_medicamento_IdMedicamentoFk",
+                        name: "FK_medicamentosVendidos_medicamentos_IdMedicamentoFk",
                         column: x => x.IdMedicamentoFk,
-                        principalTable: "medicamento",
+                        principalTable: "medicamentos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_medicamentosVendidos_recetas_IdRecetaFk",
+                        column: x => x.IdRecetaFk,
+                        principalTable: "recetas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ciudad_IdDepartamentoFk",
-                table: "ciudad",
+                name: "IX_ciudades_IdDepartamentoFk",
+                table: "ciudades",
                 column: "IdDepartamentoFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_compraproveedor_IdPersonaFk",
-                table: "compraproveedor",
+                name: "IX_comprasProveedores_IdPersonaFk",
+                table: "comprasProveedores",
                 column: "IdPersonaFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_compraproveedor_IdProveedorFk",
-                table: "compraproveedor",
+                name: "IX_comprasProveedores_IdProveedorFk",
+                table: "comprasProveedores",
                 column: "IdProveedorFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Departamento_IdPaisFk",
-                table: "Departamento",
+                name: "IX_departamentos_IdPaisFk",
+                table: "departamentos",
                 column: "IdPaisFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Factura_IdDoctorFk",
-                table: "Factura",
+                name: "IX_facturas_IdDoctorFk",
+                table: "facturas",
                 column: "IdDoctorFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Factura_PersonaDoctorId",
-                table: "Factura",
+                name: "IX_facturas_PersonaDoctorId",
+                table: "facturas",
                 column: "PersonaDoctorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_medicamento_IdCategoriaFK",
-                table: "medicamento",
+                name: "IX_medicamentos_IdCategoriaFK",
+                table: "medicamentos",
                 column: "IdCategoriaFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_medicamento_IdEstadoFK",
-                table: "medicamento",
+                name: "IX_medicamentos_IdEstadoFK",
+                table: "medicamentos",
                 column: "IdEstadoFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_medicamento_IdMarcaFk",
-                table: "medicamento",
+                name: "IX_medicamentos_IdMarcaFk",
+                table: "medicamentos",
                 column: "IdMarcaFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_medicamento_MedicamentoCompradoId",
-                table: "medicamento",
+                name: "IX_medicamentos_MedicamentoCompradoId",
+                table: "medicamentos",
                 column: "MedicamentoCompradoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicamentoComprado_IdCompraProveedorFk",
-                table: "MedicamentoComprado",
+                name: "IX_medicamentosComprados_IdCompraProveedorFk",
+                table: "medicamentosComprados",
                 column: "IdCompraProveedorFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicamentoComprado_IdMedicamentoFk",
-                table: "MedicamentoComprado",
+                name: "IX_medicamentosComprados_IdMedicamentoFk",
+                table: "medicamentosComprados",
                 column: "IdMedicamentoFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicamentoVendido_IdFacturaFK",
-                table: "MedicamentoVendido",
+                name: "IX_medicamentosVendidos_IdFacturaFK",
+                table: "medicamentosVendidos",
                 column: "IdFacturaFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicamentoVendido_IdRecetaFk",
-                table: "MedicamentoVendido",
+                name: "IX_medicamentosVendidos_IdRecetaFk",
+                table: "medicamentosVendidos",
                 column: "IdRecetaFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Persona_IdCargoFk",
-                table: "Persona",
+                name: "IX_personas_IdCargoFk",
+                table: "personas",
                 column: "IdCargoFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Persona_IdTipoDocumentoFk",
-                table: "Persona",
+                name: "IX_personas_IdTipoDocumentoFk",
+                table: "personas",
                 column: "IdTipoDocumentoFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Persona_IdTipoPersonaFk",
-                table: "Persona",
+                name: "IX_personas_IdTipoPersonaFk",
+                table: "personas",
                 column: "IdTipoPersonaFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonaContacto_IdPersonaFk",
-                table: "PersonaContacto",
+                name: "IX_personasContactos_IdPersonaFk",
+                table: "personasContactos",
                 column: "IdPersonaFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonaContacto_IdTipoContactoFk",
-                table: "PersonaContacto",
+                name: "IX_personasContactos_IdTipoContactoFk",
+                table: "personasContactos",
                 column: "IdTipoContactoFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonaDireccion_IdCiudadFk",
-                table: "PersonaDireccion",
+                name: "IX_personasDirecciones_IdCiudadFk",
+                table: "personasDirecciones",
                 column: "IdCiudadFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PersonaDireccion_IdPersonaFk",
-                table: "PersonaDireccion",
+                name: "IX_personasDirecciones_IdPersonaFk",
+                table: "personasDirecciones",
                 column: "IdPersonaFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProveedorContacto_IdProveedorFk",
-                table: "ProveedorContacto",
+                name: "IX_proveedoresContactos_IdProveedorFk",
+                table: "proveedoresContactos",
                 column: "IdProveedorFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProveedorContacto_IdTipoContactoFk",
-                table: "ProveedorContacto",
+                name: "IX_proveedoresContactos_IdTipoContactoFk",
+                table: "proveedoresContactos",
                 column: "IdTipoContactoFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProveedorDireccion_IdCiudadFk",
-                table: "ProveedorDireccion",
+                name: "IX_proveedoresDirecciones_IdCiudadFk",
+                table: "proveedoresDirecciones",
                 column: "IdCiudadFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProveedorDireccion_IdProveedorFk",
-                table: "ProveedorDireccion",
+                name: "IX_proveedoresDirecciones_IdProveedorFk",
+                table: "proveedoresDirecciones",
                 column: "IdProveedorFk");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Receta_IdDoctorFK",
-                table: "Receta",
+                name: "IX_recetas_IdDoctorFK",
+                table: "recetas",
                 column: "IdDoctorFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Receta_IdPacienteFK",
-                table: "Receta",
+                name: "IX_recetas_IdPacienteFK",
+                table: "recetas",
                 column: "IdPacienteFK");
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_IdPersonaFk",
-                table: "User",
+                name: "IX_users_IdPersonaFk",
+                table: "users",
                 column: "IdPersonaFk",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_User_IdRol",
-                table: "User",
+                name: "IX_users_IdRol",
+                table: "users",
                 column: "IdRol");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_medicamento_MedicamentoComprado_MedicamentoCompradoId",
-                table: "medicamento",
+                name: "FK_medicamentos_medicamentosComprados_MedicamentoCompradoId",
+                table: "medicamentos",
                 column: "MedicamentoCompradoId",
-                principalTable: "MedicamentoComprado",
+                principalTable: "medicamentosComprados",
                 principalColumn: "Id");
         }
 
@@ -743,92 +744,100 @@ namespace Persistence.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_compraproveedor_Persona_IdPersonaFk",
-                table: "compraproveedor");
+                name: "FK_comprasProveedores_personas_IdPersonaFk",
+                table: "comprasProveedores");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_compraproveedor_Proveedor_IdProveedorFk",
-                table: "compraproveedor");
+                name: "FK_comprasProveedores_proveedores_IdProveedorFk",
+                table: "comprasProveedores");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_medicamento_Estado_IdEstadoFK",
-                table: "medicamento");
+                name: "FK_medicamentos_categorias_IdCategoriaFK",
+                table: "medicamentos");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_medicamento_MedicamentoComprado_MedicamentoCompradoId",
-                table: "medicamento");
+                name: "FK_medicamentos_estados_IdEstadoFK",
+                table: "medicamentos");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_medicamentos_marcas_IdMarcaFk",
+                table: "medicamentos");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_medicamentos_medicamentosComprados_MedicamentoCompradoId",
+                table: "medicamentos");
 
             migrationBuilder.DropTable(
-                name: "MedicamentoVendido");
+                name: "medicamentosVendidos");
 
             migrationBuilder.DropTable(
-                name: "PersonaContacto");
+                name: "personasContactos");
 
             migrationBuilder.DropTable(
-                name: "PersonaDireccion");
+                name: "personasDirecciones");
 
             migrationBuilder.DropTable(
-                name: "ProveedorContacto");
+                name: "proveedoresContactos");
 
             migrationBuilder.DropTable(
-                name: "ProveedorDireccion");
+                name: "proveedoresDirecciones");
 
             migrationBuilder.DropTable(
-                name: "User");
+                name: "users");
 
             migrationBuilder.DropTable(
-                name: "Factura");
+                name: "facturas");
 
             migrationBuilder.DropTable(
-                name: "Receta");
+                name: "recetas");
 
             migrationBuilder.DropTable(
-                name: "TipoContacto");
+                name: "tiposContactos");
 
             migrationBuilder.DropTable(
-                name: "ciudad");
+                name: "ciudades");
 
             migrationBuilder.DropTable(
-                name: "Rol");
+                name: "roles");
 
             migrationBuilder.DropTable(
-                name: "Departamento");
+                name: "departamentos");
 
             migrationBuilder.DropTable(
-                name: "pais");
+                name: "paises");
 
             migrationBuilder.DropTable(
-                name: "Persona");
+                name: "personas");
 
             migrationBuilder.DropTable(
-                name: "TipoDocumento");
+                name: "cargos");
 
             migrationBuilder.DropTable(
-                name: "TipoPersona");
+                name: "tiposDocumentos");
 
             migrationBuilder.DropTable(
-                name: "cargo");
+                name: "tiposPersonas");
 
             migrationBuilder.DropTable(
-                name: "Proveedor");
+                name: "proveedores");
 
             migrationBuilder.DropTable(
-                name: "Estado");
+                name: "categorias");
 
             migrationBuilder.DropTable(
-                name: "MedicamentoComprado");
+                name: "estados");
 
             migrationBuilder.DropTable(
-                name: "compraproveedor");
+                name: "marcas");
 
             migrationBuilder.DropTable(
-                name: "medicamento");
+                name: "medicamentosComprados");
 
             migrationBuilder.DropTable(
-                name: "categoria");
+                name: "comprasProveedores");
 
             migrationBuilder.DropTable(
-                name: "marca");
+                name: "medicamentos");
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Persistence.Data.Configuration;
     {
         public void Configure(EntityTypeBuilder<Departamento> builder)
         {
-            builder.ToTable("Departamento");
+            builder.ToTable("departamentos");
             builder.Property(P=> P.Nombre)
             .HasColumnName("Nombre")
             .HasMaxLength(50)

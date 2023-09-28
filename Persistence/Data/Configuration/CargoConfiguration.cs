@@ -7,10 +7,10 @@ namespace Persistence.Data.Configuration;
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Cargo> builder)
         {
-            builder.ToTable("cargo");
+            builder.ToTable("cargos");
 
             builder.Property(p=> p.Descripcion)
-            .HasColumnName("cargo")
+            .HasColumnName("nombre")
             .HasMaxLength(50)
             .IsRequired();
 

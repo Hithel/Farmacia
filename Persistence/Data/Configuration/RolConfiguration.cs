@@ -8,10 +8,10 @@ namespace Persistence.Data.Configuration;
         {
             public void Configure(EntityTypeBuilder<Rol> builder)
             {
-                builder.ToTable("Rol");
+                builder.ToTable("roles");
 
                 builder.Property(p=> p.Descripcion)
-                .HasColumnName("Descripcion")
+                .HasColumnName("descripcion")
                 .HasMaxLength(50)
                 .IsRequired();
     

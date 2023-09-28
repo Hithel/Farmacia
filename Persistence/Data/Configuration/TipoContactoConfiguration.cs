@@ -8,7 +8,7 @@ namespace Persistence.Data.Configuration;
         {
             public void Configure(EntityTypeBuilder<TipoContacto> builder)
             {
-                builder.ToTable("TipoContacto");
+                builder.ToTable("tiposContactos");
 
                 builder.Property(p=> p.Descripcion)
                 .HasColumnName("Descripcion")

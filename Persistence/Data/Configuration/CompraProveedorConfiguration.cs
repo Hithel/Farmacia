@@ -8,7 +8,7 @@ namespace Persistence.Data.Configuration;
     {
         public void Configure(EntityTypeBuilder<CompraProveedor> builder)
         {
-            builder.ToTable("compraproveedor");
+            builder.ToTable("comprasProveedores");
             builder.Property(p=> p.FechaCompra)
             .HasColumnName("FechaCompra")
             .HasColumnType("datetime")

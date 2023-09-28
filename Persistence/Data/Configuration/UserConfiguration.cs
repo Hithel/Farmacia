@@ -8,7 +8,7 @@ namespace Persistence.Data.Configuration;
         {
             public void Configure(EntityTypeBuilder<User> builder)
             {
-                builder.ToTable("User");
+                builder.ToTable("users");
     
                 builder.Property(p => p.UserName)
                 .HasColumnName("username")
